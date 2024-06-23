@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import {
     Button, Container, Typography, Grid, Avatar, TextField, InputAdornment, IconButton, Paper
 } from '@material-ui/core';
 import { Visibility, VisibilityOff, LockOutlined as LockOutlinedIcon, Email as EmailIcon, Lock as LockIcon } from '@material-ui/icons';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import useStyles from '../styles/LoginStyles';
 
 const validationSchema = Yup.object({
-    email: Yup.string().email('Email inválido').required('Email es requerido'),
+    identifier: Yup.string().required('Correo Electrónico o Número de Cédula es requerido'),
     password: Yup.string().required('Contraseña es requerida'),
 });
 
@@ -29,15 +30,16 @@ const Login = () => {
         event.preventDefault();
     };
 
-    const handleSubmit = (values, { setSubmitting }) => {
-        const users = JSON.parse(localStorage.getItem('users')) || [];
-        const user = users.find(u => u.email === values.email && u.password === values.password);
-
-        if (user) {
+    const handleSubmit = async (values, { setSubmitting }) => {
+        try {
+            console.log('Login request sent:', values); // Añadir un log
+            const response = await axios.post('http://localhost:5000/login', values);
+            alert(response.data.message);
             login();
-            navigate('/Home'); // Ajusta la ruta de redirección según sea necesario
-        } else {
-            setError('Credenciales incorrectas');
+            navigate('/home');
+        } catch (error) {
+            console.error('Login error:', error.response.data.message); // Añadir un log
+            setError(error.response.data.message);
             setSubmitting(false);
         }
     };
@@ -52,7 +54,7 @@ const Login = () => {
                     Iniciar Sesión
                 </Typography>
                 <Formik
-                    initialValues={{ email: '', password: '' }}
+                    initialValues={{ identifier: '', password: '' }}
                     validationSchema={validationSchema}
                     onSubmit={handleSubmit}
                 >
@@ -62,11 +64,11 @@ const Login = () => {
                                 <Grid item xs={12}>
                                     <Field
                                         as={TextField}
-                                        name="email"
-                                        label="Correo Electrónico"
+                                        name="identifier"
+                                        label="Correo Electrónico o Número de Cédula"
                                         fullWidth
-                                        error={touched.email && !!errors.email}
-                                        helperText={touched.email && errors.email}
+                                        error={touched.identifier && !!errors.identifier}
+                                        helperText={touched.identifier && errors.identifier}
                                         InputProps={{
                                             startAdornment: (
                                                 <InputAdornment position="start">
@@ -129,6 +131,9 @@ const Login = () => {
                     )}
                 </Formik>
             </Paper>
+            <Typography variant="body2">
+                ¿No tienes una cuenta? <Link to="/register">Regístrate aquí</Link>
+            </Typography>
         </Container>
     );
 };

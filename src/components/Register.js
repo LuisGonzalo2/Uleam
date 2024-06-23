@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import {
     Button, Container, Typography, Grid, Paper, Avatar, MenuItem, InputAdornment, IconButton
 } from '@material-ui/core';
@@ -20,7 +21,6 @@ import CustomAlert from './Register/CustomAlert';
 import CustomTextField from './Register/CustomTextField';
 import CustomSelect from './Register/CustomSelect';
 import PasswordStrengthBar from './Register/PasswordStrengthBar';
-import { useAuth } from '../context/AuthContext';
 import zxcvbn from 'zxcvbn';
 
 const validationSchema = Yup.object({
@@ -61,7 +61,6 @@ const Register = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [passwordStrength, setPasswordStrength] = useState({ label: '', color: 'grey', score: 0 });
     const navigate = useNavigate();
-    const { login } = useAuth();
 
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
@@ -84,21 +83,21 @@ const Register = () => {
         setAlert({ ...alert, open: false });
     };
 
-    const handleSubmit = (values, { setSubmitting, resetForm }) => {
-        // Guardar datos en localStorage
-        const users = JSON.parse(localStorage.getItem('users')) || [];
-        users.push(values);
-        localStorage.setItem('users', JSON.stringify(users));
-
-        // Mostrar alerta de éxito y redirigir a la página de inicio de sesión
-        setOpen(true);
-        setTimeout(() => {
-            setOpen(false);
-            setAlert({ open: true, severity: 'success', message: 'Registro exitoso' });
-            resetForm();
+    const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+        try {
+            const response = await axios.post('http://localhost:5000/register', values);
+            setOpen(true);
+            setTimeout(() => {
+                setOpen(false);
+                setAlert({ open: true, severity: 'success', message: 'Registro exitoso' });
+                resetForm();
+                setSubmitting(false);
+                navigate('/login');
+            }, 2000);
+        } catch (error) {
+            setAlert({ open: true, severity: 'error', message: error.response.data.message });
             setSubmitting(false);
-            navigate('/login');
-        }, 2000);
+        }
     };
 
     return (
@@ -135,6 +134,7 @@ const Register = () => {
                                             component={CustomTextField}
                                             name="name"
                                             label="Nombre"
+                                            InputLabelProps={{ shrink: true }}
                                             startAdornment={<PersonIcon />}
                                         />
                                     </Grid>
@@ -143,6 +143,7 @@ const Register = () => {
                                             component={CustomTextField}
                                             name="email"
                                             label="Correo Electrónico"
+                                            InputLabelProps={{ shrink: true }}
                                             startAdornment={<EmailIcon />}
                                         />
                                     </Grid>
@@ -152,6 +153,7 @@ const Register = () => {
                                             name="password"
                                             label="Contraseña"
                                             type={showPassword ? 'text' : 'password'}
+                                            InputLabelProps={{ shrink: true }}
                                             startAdornment={<LockIcon />}
                                             endAdornment={
                                                 <InputAdornment position="end">
@@ -174,6 +176,7 @@ const Register = () => {
                                             name="confirmPassword"
                                             label="Confirmar Contraseña"
                                             type={showPassword ? 'text' : 'password'}
+                                            InputLabelProps={{ shrink: true }}
                                             startAdornment={<LockIcon />}
                                             endAdornment={
                                                 <InputAdornment position="end">
@@ -193,6 +196,7 @@ const Register = () => {
                                             component={CustomTextField}
                                             name="address"
                                             label="Dirección"
+                                            InputLabelProps={{ shrink: true }}
                                             startAdornment={<HomeIcon />}
                                         />
                                     </Grid>
@@ -201,6 +205,7 @@ const Register = () => {
                                             component={CustomTextField}
                                             name="phone"
                                             label="Número de Teléfono"
+                                            InputLabelProps={{ shrink: true }}
                                             startAdornment={<PhoneIcon />}
                                         />
                                     </Grid>
@@ -209,6 +214,7 @@ const Register = () => {
                                             component={CustomTextField}
                                             name="cedula"
                                             label="Número de Cédula"
+                                            InputLabelProps={{ shrink: true }}
                                             startAdornment={<IdIcon />}
                                         />
                                     </Grid>
@@ -217,6 +223,7 @@ const Register = () => {
                                             component={CustomSelect}
                                             name="gender"
                                             label="Género"
+                                            InputLabelProps={{ shrink: true }}
                                         >
                                             <MenuItem value="male">Masculino</MenuItem>
                                             <MenuItem value="female">Femenino</MenuItem>
@@ -238,6 +245,7 @@ const Register = () => {
                                             component={CustomSelect}
                                             name="disability"
                                             label="Discapacidad"
+                                            InputLabelProps={{ shrink: true }}
                                         >
                                             <MenuItem value="yes">Sí</MenuItem>
                                             <MenuItem value="no">No</MenuItem>
@@ -261,3 +269,4 @@ const Register = () => {
 };
 
 export default Register;
+
