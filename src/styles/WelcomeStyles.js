@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-
+import campusScenery from '../assets/campus.jpg';
 const useStyles = makeStyles((theme) => ({
     root: {
         textAlign: 'center',
@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(4),
     },
     heroContainer: {
-        backgroundImage: `url('/src/assets/campus.jpg')`, // Imagen del campus
+        backgroundImage: `url(${campusScenery})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         padding: theme.spacing(10, 2),
@@ -59,6 +59,9 @@ const useStyles = makeStyles((theme) => ({
         fontSize: '3rem',
         color: theme.palette.secondary.main,
         marginBottom: theme.spacing(1),
+    },
+    applyButton: {
+        marginTop: theme.spacing(4),
     },
     imageGrid: {
         marginTop: theme.spacing(4),

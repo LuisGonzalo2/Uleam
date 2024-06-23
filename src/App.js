@@ -7,6 +7,7 @@ import Register from './components/Register';
 import Login from './components/Login';
 import Profile from './components/Profile';
 import Welcome from './components/Welcome';
+import Apply from "./components/Apply";
 import About from './components/About';
 import Services from './components/Services';
 import Contact from './components/Contact';
@@ -24,6 +25,7 @@ const App = () => {
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/apply" element={<Apply />} />
                 <Route path="/home" element={<PrivateRoute />}>
                     <Route index element={<Home />} />
                     <Route path="profile" element={<Profile />} />

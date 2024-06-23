@@ -1,17 +1,29 @@
 import React from 'react';
 import { Container, Typography, Grid, Card, CardMedia, CardContent } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useStyles from '../styles/WelcomeStyles';
 import InfoIcon from '@material-ui/icons/Info';
 import BuildIcon from '@material-ui/icons/Build';
 import ContactMailIcon from '@material-ui/icons/ContactMail';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import dormRoom from '../assets/dorm_room.jpg'; // Imagen del dormitorio
-import universityLife from '../assets/university_life.webp'; // Imagen de la vida universitaria
-import campusScenery from '../assets/campus.jpg'; // Imagen del campus
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import dormRoom from '../assets/dorm_room.jpg';
+import universityLife from '../assets/university_life.webp';
+import campusScenery from '../assets/campus.jpg';
+import { useAuth } from '../context/AuthContext';
 
 const Welcome = () => {
     const classes = useStyles();
+    const { isAuthenticated } = useAuth();
+    const navigate = useNavigate();
+
+    const handleApplyClick = () => {
+        if (!isAuthenticated) {
+            navigate('/login');
+        } else {
+            navigate('/apply');
+        }
+    };
 
     return (
         <div className={classes.root}>
@@ -45,11 +57,19 @@ const Welcome = () => {
                             <Typography>Contacto</Typography>
                         </Link>
                     </Grid>
+                    {!isAuthenticated && (
+                        <Grid item>
+                            <Link to="/register" className={classes.iconButton}>
+                                <PersonAddIcon className={classes.icon} />
+                                <Typography>Registrarse</Typography>
+                            </Link>
+                        </Grid>
+                    )}
                     <Grid item>
-                        <Link to="/register" className={classes.iconButton}>
-                            <PersonAddIcon className={classes.icon} />
-                            <Typography>Registrarse</Typography>
-                        </Link>
+                        <div className={classes.iconButton} onClick={handleApplyClick}>
+                            <AssignmentIcon className={classes.icon} />
+                            <Typography>Solicitar Residencia</Typography>
+                        </div>
                     </Grid>
                 </Grid>
             </Container>

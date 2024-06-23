@@ -32,13 +32,13 @@ const Login = () => {
 
     const handleSubmit = async (values, { setSubmitting }) => {
         try {
-            console.log('Login request sent:', values); // Añadir un log
+            console.log('Login request sent:', values);
             const response = await axios.post('http://localhost:5000/login', values);
             alert(response.data.message);
-            login();
-            navigate('/home');
+            login(response.data.user); // Asegurarse de pasar la información del usuario
+            navigate('/'); // Redirigir a la pantalla de inicio
         } catch (error) {
-            console.error('Login error:', error.response.data.message); // Añadir un log
+            console.error('Login error:', error.response.data.message);
             setError(error.response.data.message);
             setSubmitting(false);
         }

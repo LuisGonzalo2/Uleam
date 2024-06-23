@@ -12,6 +12,7 @@
     "axios": "^1.7.2",
     "cors": "^2.8.5",
     "formik": "^2.4.6",
+    "formik-material-ui": "^4.0.0-alpha.2",
     "framer-motion": "^11.2.10",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
