@@ -14,7 +14,7 @@ import { useAuth } from '../context/AuthContext';
 
 const Welcome = () => {
     const classes = useStyles();
-    const { isAuthenticated } = useAuth();
+    const { isAuthenticated, user } = useAuth();
     const navigate = useNavigate();
 
     const handleApplyClick = () => {
@@ -32,6 +32,11 @@ const Welcome = () => {
                     <Typography variant="h3" className={classes.heroText}>
                         Bienvenido a la Residencia Universitaria
                     </Typography>
+                    {isAuthenticated && (
+                    <Typography variant="h5" className={classes.heroText}>
+                        Bienvenido a la Residencia Universitaria, {user.name}
+                    </Typography>
+                    )}
                 </div>
                 <Typography variant="h6" className={classes.subtitle}>
                     La mejor opción para tu estancia universitaria

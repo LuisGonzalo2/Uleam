@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-//import axios from 'axios';
+import axios from 'axios';
 import {
     Button, Container, Typography, Grid, Paper, Avatar, MenuItem, InputAdornment, IconButton
 } from '@material-ui/core';
@@ -85,7 +85,7 @@ const Register = () => {
 
     const handleSubmit = async (values, { setSubmitting, resetForm }) => {
         try {
-            //const response = await axios.post('http://localhost:5000/register', values);
+            const response = await axios.post('http://localhost:5000/register', values);
             setOpen(true);
             setTimeout(() => {
                 setOpen(false);
@@ -269,4 +269,3 @@ const Register = () => {
 };
 
 export default Register;
-

@@ -1,13 +1,26 @@
-[
-  {
-    "name": "Luis",
+{
+  "1234567890": {
+    "name": "Juan Perez",
+    "email": "juan.perez@example.com",
+    "password": "securepassword",
+    "address": "Calle Falsa 123",
+    "phone": "0987654321",
+    "cedula": "1234567890",
+    "gender": "male",
+    "birthday": "1990-01-01",
+    "disability": "no",
+    "dormitory": null
+  },
+  "1722680400": {
+    "name": "Gon ",
     "email": "gonluiz.hispa@gmail.com",
     "password": "Agjh2901!",
-    "address": "3145, Montecristi",
+    "address": "3145, Montecristi a",
     "phone": "0985226618",
     "cedula": "1722680400",
     "gender": "male",
-    "birthday": "2024-06-06",
-    "disability": "no"
+    "birthday": "2024-06-12",
+    "disability": "no",
+    "dormitory": null
   }
-]
+}
