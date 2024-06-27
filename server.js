@@ -68,17 +68,22 @@ app.post('/login', (req, res) => {
 
 app.put('/users/:cedula', (req, res) => {
     const { cedula } = req.params;
-    const updatedData = req.body;
+    const { email, address, phone } = req.body;
     const users = readUsersFromFile();
 
     if (!users[cedula]) {
         return res.status(404).json({ message: 'Usuario no encontrado' });
     }
 
-    users[cedula] = { ...users[cedula], ...updatedData };
-    writeUsersToFile(users);
+    users[cedula] = {
+        ...users[cedula],
+        email,
+        address,
+        phone
+    };
 
-    res.status(200).json({ message: 'Usuario actualizado exitosamente', user: users[cedula] });
+    writeUsersToFile(users);
+    res.status(200).json({ message: 'Datos actualizados correctamente', user: users[cedula] });
 });
 
 app.listen(PORT, () => {

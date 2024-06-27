@@ -1,33 +1,10 @@
 import React, { useState } from 'react';
-import { Container, Typography, Grid, Paper, TextField, Button, IconButton, makeStyles, CircularProgress, Snackbar } from '@material-ui/core';
+import { Container, Typography, Grid, Paper, TextField, Button, IconButton, CircularProgress, Snackbar } from '@material-ui/core';
 import { Edit as EditIcon } from '@material-ui/icons';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 import MuiAlert from '@material-ui/lab/Alert';
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        padding: theme.spacing(4),
-    },
-    paper: {
-        padding: theme.spacing(2),
-    },
-    title: {
-        marginBottom: theme.spacing(2),
-    },
-    field: {
-        marginBottom: theme.spacing(1),
-        display: 'flex',
-        alignItems: 'center',
-    },
-    button: {
-        marginTop: theme.spacing(2),
-    },
-    input: {
-        flexGrow: 1,
-        marginRight: theme.spacing(1),
-    },
-}));
+import useStyles from '../styles/ProfileStyles';
 
 const Alert = (props) => {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -180,7 +157,7 @@ const Profile = () => {
                     </Grid>
                     <Grid item xs={12} className={classes.field}>
                         <Typography variant="h6">Dormitorio:</Typography>
-                        <Typography variant="body1" className={classes.input}>{user.dormitory ? `Dormitorio ${user.dormitory}` : 'No asignado'}</Typography>
+                        <Typography variant="body1" className={classes.input}>{user.dormitory || 'No asignado'}</Typography>
                     </Grid>
                     <Grid item xs={12}>
                         {hasEdits && (

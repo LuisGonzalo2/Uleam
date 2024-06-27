@@ -7,7 +7,6 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        // Verificar si hay un usuario autenticado al cargar la aplicación
         const loggedInUser = localStorage.getItem('user');
         if (loggedInUser) {
             try {
