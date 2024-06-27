@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import universityLogo from '../assets/download.png'; // Logo de la universidad
 
 const Navbar = () => {
-    const { isAuthenticated, user, logout } = useAuth();
+    const { isAuthenticated, logout } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -23,26 +23,25 @@ const Navbar = () => {
                         Residencia Universitaria
                     </Typography>
                 </Box>
-                {location.pathname === '/login' ? (
+                {location.pathname !== '/' && (
                     <Button color="inherit" component={Link} to="/">
                         Inicio
                     </Button>
-                ) : (
-                    !isAuthenticated && (
-                        <Button color="inherit" component={Link} to="/login">
-                            Iniciar Sesión
-                        </Button>
-                    )
+                )}
+                {!isAuthenticated && location.pathname !== '/login' && (
+                    <Button color="inherit" component={Link} to="/login">
+                        Iniciar Sesión
+                    </Button>
+                )}
+                {isAuthenticated && location.pathname !== '/profile' && (
+                    <Button color="inherit" component={Link} to="/profile">
+                        Mi Perfil
+                    </Button>
                 )}
                 {isAuthenticated && (
-                    <>
-                        <Button color="inherit" component={Link} to="/profile">
-                            Mi Perfil
-                        </Button>
-                        <Button color="inherit" onClick={handleLogout}>
-                            Cerrar Sesión
-                        </Button>
-                    </>
+                    <Button color="inherit" onClick={handleLogout}>
+                        Cerrar Sesión
+                    </Button>
                 )}
             </Toolbar>
         </AppBar>
