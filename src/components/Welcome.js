@@ -30,13 +30,8 @@ const Welcome = () => {
             <div className={classes.heroContainer}>
                 <div className={classes.heroTextContainer}>
                     <Typography variant="h3" className={classes.heroText}>
-                        Bienvenido a la Residencia Universitaria
+                        Bienvenido a la Residencia Universitaria{isAuthenticated ? `, ${user.name}` : ''}
                     </Typography>
-                    {isAuthenticated && (
-                    <Typography variant="h5" className={classes.heroText}>
-                        Bienvenido a la Residencia Universitaria, {user.name}
-                    </Typography>
-                    )}
                 </div>
                 <Typography variant="h6" className={classes.subtitle}>
                     La mejor opción para tu estancia universitaria

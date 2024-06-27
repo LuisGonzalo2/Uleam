@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Container, Typography, Grid, Paper, TextField, Button, IconButton, makeStyles, CircularProgress } from '@material-ui/core';
-import { Edit as EditIcon, Check as CheckIcon } from '@material-ui/icons';
+import { Container, Typography, Grid, Paper, TextField, Button, IconButton, makeStyles, CircularProgress, Snackbar } from '@material-ui/core';
+import { Edit as EditIcon } from '@material-ui/icons';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
+import MuiAlert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -28,6 +29,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const Alert = (props) => {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+};
+
 const Profile = () => {
     const classes = useStyles();
     const { user, setUser } = useAuth();
@@ -43,6 +48,7 @@ const Profile = () => {
         phone: user.phone,
     });
     const [hasEdits, setHasEdits] = useState(false);
+    const [alert, setAlert] = useState({ open: false, severity: '', message: '' });
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -71,11 +77,20 @@ const Profile = () => {
                 phone: false,
             });
             setHasEdits(false);
+            setAlert({ open: true, severity: 'success', message: 'Datos actualizados correctamente' });
         } catch (error) {
             console.error('Error updating user data:', error);
+            setAlert({ open: true, severity: 'error', message: 'Error actualizando los datos' });
         } finally {
             setLoading(false);
         }
+    };
+
+    const handleCloseAlert = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setAlert({ open: false, severity: '', message: '' });
     };
 
     const handleLogout = () => {
@@ -187,6 +202,11 @@ const Profile = () => {
                     </Grid>
                 </Grid>
             </Paper>
+            <Snackbar open={alert.open} autoHideDuration={3000} onClose={handleCloseAlert}>
+                <Alert onClose={handleCloseAlert} severity={alert.severity}>
+                    {alert.message}
+                </Alert>
+            </Snackbar>
         </Container>
     );
 };
