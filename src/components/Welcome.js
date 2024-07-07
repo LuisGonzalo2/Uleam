@@ -1,5 +1,15 @@
-import React from 'react';
-import { Container, Typography, Grid, Card, CardMedia, CardContent } from '@material-ui/core';
+import React, { useState } from 'react';
+import {
+    Container,
+    Typography,
+    Grid,
+    Card,
+    CardMedia,
+    CardContent,
+    Modal,
+    Backdrop,
+    Fade,
+} from '@material-ui/core';
 import { Link, useNavigate } from 'react-router-dom';
 import useStyles from '../styles/WelcomeStyles';
 import InfoIcon from '@material-ui/icons/Info';
@@ -16,6 +26,8 @@ const Welcome = () => {
     const classes = useStyles();
     const { isAuthenticated, user } = useAuth();
     const navigate = useNavigate();
+    const [open, setOpen] = useState(false);
+    const [modalContent, setModalContent] = useState({ title: '', description: '' });
 
     const handleApplyClick = () => {
         if (!isAuthenticated) {
@@ -25,13 +37,27 @@ const Welcome = () => {
         }
     };
 
+    const handleOpen = (title, description) => {
+        setModalContent({ title, description });
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
     return (
         <div className={classes.root}>
             <div className={classes.heroContainer}>
                 <div className={classes.heroTextContainer}>
                     <Typography variant="h3" className={classes.heroText}>
-                        Bienvenido a la Residencia Universitaria{isAuthenticated ? `, ${user.name}` : ''}
+                        Bienvenido a la Residencia Universitaria
                     </Typography>
+                    {isAuthenticated && (
+                        <Typography variant="h5" className={classes.heroText}>
+                            Bienvenido a la Residencia Universitaria, {user.name}
+                        </Typography>
+                    )}
                 </div>
                 <Typography variant="h6" className={classes.subtitle}>
                     La mejor opción para tu estancia universitaria
@@ -76,7 +102,7 @@ const Welcome = () => {
             <Container>
                 <Grid container spacing={4} className={classes.imageGrid}>
                     <Grid item xs={12} sm={6} md={4}>
-                        <Card className={classes.imageCard}>
+                        <Card className={classes.imageCard} onClick={() => handleOpen('Habitaciones del Dormitorio', 'Descubre nuestras habitaciones cómodas y modernas, diseñadas para ofrecerte el mejor ambiente para estudiar y descansar. Equipadas con todas las comodidades que necesitas para sentirte como en casa.')}>
                             <CardMedia
                                 className={classes.media}
                                 image={dormRoom}
@@ -93,7 +119,7 @@ const Welcome = () => {
                         </Card>
                     </Grid>
                     <Grid item xs={12} sm={6} md={4}>
-                        <Card className={classes.imageCard}>
+                        <Card className={classes.imageCard} onClick={() => handleOpen('Vida Universitaria', 'Experimenta la vida en el campus con una comunidad vibrante y diversa, llena de actividades y eventos que enriquecerán tu experiencia universitaria.')}>
                             <CardMedia
                                 className={classes.media}
                                 image={universityLife}
@@ -110,7 +136,7 @@ const Welcome = () => {
                         </Card>
                     </Grid>
                     <Grid item xs={12} sm={6} md={4}>
-                        <Card className={classes.imageCard}>
+                        <Card className={classes.imageCard} onClick={() => handleOpen('Escenarios del Campus', 'Disfruta de nuestros hermosos y bien cuidados escenarios en el campus, ideales para relajarte, estudiar al aire libre y socializar con tus compañeros.')}>
                             <CardMedia
                                 className={classes.media}
                                 image={campusScenery}
@@ -128,6 +154,25 @@ const Welcome = () => {
                     </Grid>
                 </Grid>
             </Container>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                    timeout: 500,
+                }}
+                className={classes.modal}
+            >
+                <Fade in={open}>
+                    <div className={classes.paper}>
+                        <Typography variant="h4">{modalContent.title}</Typography>
+                        <Typography variant="body1" style={{ marginTop: '1rem' }}>
+                            {modalContent.description}
+                        </Typography>
+                    </div>
+                </Fade>
+            </Modal>
         </div>
     );
 };

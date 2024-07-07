@@ -1,5 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 import campusScenery from '../assets/campus.jpg';
+
 const useStyles = makeStyles((theme) => ({
     root: {
         textAlign: 'center',
@@ -20,10 +21,6 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         justifyContent: 'center',
         marginBottom: theme.spacing(2),
-    },
-    logo: {
-        width: 80,
-        marginRight: theme.spacing(2),
     },
     heroText: {
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -69,9 +66,29 @@ const useStyles = makeStyles((theme) => ({
     imageCard: {
         maxWidth: 345,
         margin: 'auto',
+        cursor: 'pointer',
+        transition: 'transform 0.3s, box-shadow 0.3s',
+        '&:hover': {
+            transform: 'scale(1.05)',
+            boxShadow: theme.shadows[5],
+        },
     },
     media: {
         height: 200,
+    },
+    modal: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    paper: {
+        backgroundColor: theme.palette.background.paper,
+        border: '2px solid #000',
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+        borderRadius: theme.shape.borderRadius,
+        maxWidth: 600,
+        width: '90%',
     },
 }));
 
