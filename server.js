@@ -29,7 +29,6 @@ const writeFile = (file, data) => {
     }
 };
 
-
 app.post('/register', (req, res) => {
     const { name, email, password, address, phone, cedula, gender, birthday, disability } = req.body;
     const users = readFile(USERS_FILE);
@@ -130,6 +129,25 @@ app.put('/questions/:cedula', (req, res) => {
     }
 
     res.status(200).json({ message: 'Estado de la solicitud actualizado con éxito' });
+});
+
+app.get('/users', (req, res) => {
+    const usersData = readFile(USERS_FILE);
+    res.status(200).json(usersData);
+});
+
+app.put('/users/:cedula', (req, res) => {
+    const { cedula } = req.params;
+    const updatedData = req.body;
+    const users = readFile(USERS_FILE);
+
+    if (!users[cedula]) {
+        return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+
+    users[cedula] = { ...users[cedula], ...updatedData };
+    writeFile(USERS_FILE, users);
+    res.status(200).json({ message: 'Datos del usuario actualizados con éxito' });
 });
 
 app.listen(PORT, () => {

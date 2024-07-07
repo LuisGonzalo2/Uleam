@@ -39,7 +39,7 @@ const Navbar = () => {
                     </Button>
                 )}
                 {isAuthenticated && user?.isAdmin && (
-                    <Button color="inherit" component={Link} to="/admin-panel">
+                    <Button color="inherit" component={Link} to="/admin">
                         Panel
                     </Button>
                 )}
