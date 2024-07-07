@@ -27,7 +27,7 @@ const Welcome = () => {
     const { isAuthenticated, user } = useAuth();
     const navigate = useNavigate();
     const [open, setOpen] = useState(false);
-    const [modalContent, setModalContent] = useState({ title: '', description: '' });
+    const [modalContent, setModalContent] = useState({ title: '', description: '', image: '' });
 
     const handleApplyClick = () => {
         if (!isAuthenticated) {
@@ -37,8 +37,8 @@ const Welcome = () => {
         }
     };
 
-    const handleOpen = (title, description) => {
-        setModalContent({ title, description });
+    const handleOpen = (title, description, image) => {
+        setModalContent({ title, description, image });
         setOpen(true);
     };
 
@@ -102,7 +102,10 @@ const Welcome = () => {
             <Container>
                 <Grid container spacing={4} className={classes.imageGrid}>
                     <Grid item xs={12} sm={6} md={4}>
-                        <Card className={classes.imageCard} onClick={() => handleOpen('Habitaciones del Dormitorio', 'Descubre nuestras habitaciones cómodas y modernas, diseñadas para ofrecerte el mejor ambiente para estudiar y descansar. Equipadas con todas las comodidades que necesitas para sentirte como en casa.')}>
+                        <Card
+                            className={classes.imageCard}
+                            onClick={() => handleOpen('Habitaciones del Dormitorio', 'Descubre nuestras habitaciones cómodas y modernas, diseñadas para ofrecerte el mejor ambiente para estudiar y descansar. Equipadas con todas las comodidades que necesitas para sentirte como en casa.', dormRoom)}
+                        >
                             <CardMedia
                                 className={classes.media}
                                 image={dormRoom}
@@ -119,7 +122,10 @@ const Welcome = () => {
                         </Card>
                     </Grid>
                     <Grid item xs={12} sm={6} md={4}>
-                        <Card className={classes.imageCard} onClick={() => handleOpen('Vida Universitaria', 'Experimenta la vida en el campus con una comunidad vibrante y diversa, llena de actividades y eventos que enriquecerán tu experiencia universitaria.')}>
+                        <Card
+                            className={classes.imageCard}
+                            onClick={() => handleOpen('Vida Universitaria', 'Experimenta la vida en el campus con una comunidad vibrante y diversa, llena de actividades y eventos que enriquecerán tu experiencia universitaria.', universityLife)}
+                        >
                             <CardMedia
                                 className={classes.media}
                                 image={universityLife}
@@ -136,7 +142,10 @@ const Welcome = () => {
                         </Card>
                     </Grid>
                     <Grid item xs={12} sm={6} md={4}>
-                        <Card className={classes.imageCard} onClick={() => handleOpen('Escenarios del Campus', 'Disfruta de nuestros hermosos y bien cuidados escenarios en el campus, ideales para relajarte, estudiar al aire libre y socializar con tus compañeros.')}>
+                        <Card
+                            className={classes.imageCard}
+                            onClick={() => handleOpen('Escenarios del Campus', 'Disfruta de nuestros hermosos y bien cuidados escenarios en el campus, ideales para relajarte, estudiar al aire libre y socializar con tus compañeros.', campusScenery)}
+                        >
                             <CardMedia
                                 className={classes.media}
                                 image={campusScenery}
@@ -166,8 +175,8 @@ const Welcome = () => {
             >
                 <Fade in={open}>
                     <div className={classes.paper}>
-                        <Typography variant="h4">{modalContent.title}</Typography>
-                        <Typography variant="body1" style={{ marginTop: '1rem' }}>
+                        <Typography variant="h4" className={classes.modalTitle}>{modalContent.title}</Typography>
+                        <Typography variant="body1" style={{ marginTop: '1rem' }} className={classes.modalContent}>
                             {modalContent.description}
                         </Typography>
                     </div>

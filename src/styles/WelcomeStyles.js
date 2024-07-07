@@ -82,13 +82,28 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
     },
     paper: {
-        backgroundColor: theme.palette.background.paper,
-        border: '2px solid #000',
+        backgroundColor: 'rgba(0, 0, 0, 0.8)', // Fondo negro semitransparente
+        border: 'none',
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
         borderRadius: theme.shape.borderRadius,
         maxWidth: 600,
         width: '90%',
+        position: 'relative',
+        overflow: 'hidden',
+        textAlign: 'center',
+        color: '#fff', // Texto blanco
+    },
+    modalContent: {
+        position: 'relative',
+        zIndex: 1,
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: '1.2rem',
+    },
+    modalTitle: {
+        fontSize: '1.5rem',
+        fontWeight: 'bold',
     },
 }));
 
