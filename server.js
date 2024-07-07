@@ -10,26 +10,27 @@ app.use(bodyParser.json());
 app.use(cors());
 
 const USERS_FILE = './users.json';
+const QUESTIONS_FILE = './questions.json';
 
-const readUsersFromFile = () => {
-    if (fs.existsSync(USERS_FILE)) {
-        const data = fs.readFileSync(USERS_FILE);
+const readFile = (file) => {
+    if (fs.existsSync(file)) {
+        const data = fs.readFileSync(file);
         return JSON.parse(data);
     }
     return {};
 };
 
-const writeUsersToFile = (users) => {
+const writeFile = (file, data) => {
     try {
-        fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2));
+        fs.writeFileSync(file, JSON.stringify(data, null, 2));
     } catch (error) {
-        console.error("Error writing to users file:", error);
+        console.error(`Error writing to ${file}:`, error);
     }
 };
 
 app.post('/register', (req, res) => {
     const { name, email, password, address, phone, cedula, gender, birthday, disability } = req.body;
-    const users = readUsersFromFile();
+    const users = readFile(USERS_FILE);
 
     if (users[cedula]) {
         return res.status(400).json({ message: 'Usuario ya registrado' });
@@ -48,13 +49,13 @@ app.post('/register', (req, res) => {
         dormitory: null
     };
 
-    writeUsersToFile(users);
+    writeFile(USERS_FILE, users);
     res.status(201).json({ message: 'Registro exitoso' });
 });
 
 app.post('/login', (req, res) => {
     const { identifier, password } = req.body;
-    const users = readUsersFromFile();
+    const users = readFile(USERS_FILE);
     const user = Object.values(users).find(
         (user) => (user.email === identifier || user.cedula === identifier) && user.password === password
     );
@@ -66,24 +67,30 @@ app.post('/login', (req, res) => {
     res.status(200).json({ message: 'Inicio de sesión exitoso', user });
 });
 
-app.put('/users/:cedula', (req, res) => {
-    const { cedula } = req.params;
-    const { email, address, phone } = req.body;
-    const users = readUsersFromFile();
+app.post('/questions', (req, res) => {
+    const { name, cedula, questions, status } = req.body;
+    const questionsData = readFile(QUESTIONS_FILE);
 
-    if (!users[cedula]) {
-        return res.status(404).json({ message: 'Usuario no encontrado' });
-    }
-
-    users[cedula] = {
-        ...users[cedula],
-        email,
-        address,
-        phone
+    questionsData[cedula] = {
+        name,
+        cedula,
+        questions,
+        status
     };
 
-    writeUsersToFile(users);
-    res.status(200).json({ message: 'Datos actualizados correctamente', user: users[cedula] });
+    writeFile(QUESTIONS_FILE, questionsData);
+    res.status(201).json({ message: 'Solicitud enviada con éxito' });
+});
+
+app.get('/questions/:cedula', (req, res) => {
+    const { cedula } = req.params;
+    const questionsData = readFile(QUESTIONS_FILE);
+
+    if (!questionsData[cedula]) {
+        return res.status(404).json({ message: 'Solicitud no encontrada' });
+    }
+
+    res.status(200).json(questionsData[cedula]);
 });
 
 app.listen(PORT, () => {

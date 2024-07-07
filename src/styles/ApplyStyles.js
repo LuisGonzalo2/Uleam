@@ -2,24 +2,29 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        marginTop: theme.spacing(8),
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
+        padding: theme.spacing(4),
     },
     paper: {
-        marginTop: theme.spacing(3),
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
         padding: theme.spacing(3),
+        maxWidth: 800,
+        margin: 'auto',
+        textAlign: 'center',
+        boxShadow: theme.shadows[3],
+        backgroundColor: theme.palette.background.default,
+    },
+    title: {
+        marginBottom: theme.spacing(2),
+        fontWeight: 'bold',
+    },
+    subtitle: {
+        marginBottom: theme.spacing(2),
+        fontStyle: 'italic',
     },
     form: {
-        width: '100%', // Fix IE 11 issue.
-        marginTop: theme.spacing(1),
+        marginTop: theme.spacing(2),
     },
-    submit: {
-        margin: theme.spacing(3, 0, 2),
+    field: {
+        marginBottom: theme.spacing(2),
     },
 }));
 

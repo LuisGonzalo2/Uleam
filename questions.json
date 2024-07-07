@@ -1,0 +1,11 @@
+{
+  "cedula_1": {
+    "name": "Nombre del usuario 1",
+    "cedula": "cedula_1",
+    "questions": {
+      "question1": "respuesta1",
+      "question2": "respuesta2"
+    },
+    "status": "pending"
+  }
+}
