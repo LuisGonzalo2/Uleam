@@ -79,7 +79,7 @@ app.post('/login', (req, res) => {
 });
 
 app.post('/questions', (req, res) => {
-    const { name, cedula, questions, status } = req.body;
+    const { name, cedula, questions, status = 'pending' } = req.body;
     const questionsData = readFile(QUESTIONS_FILE);
 
     questionsData[cedula] = {
@@ -93,6 +93,11 @@ app.post('/questions', (req, res) => {
     res.status(201).json({ message: 'Solicitud enviada con éxito' });
 });
 
+app.get('/questions', (req, res) => {
+    const questionsData = readFile(QUESTIONS_FILE);
+    res.status(200).json(questionsData);
+});
+
 app.get('/questions/:cedula', (req, res) => {
     const { cedula } = req.params;
     const questionsData = readFile(QUESTIONS_FILE);
@@ -102,6 +107,20 @@ app.get('/questions/:cedula', (req, res) => {
     }
 
     res.status(200).json(questionsData[cedula]);
+});
+
+app.put('/questions/:cedula', (req, res) => {
+    const { cedula } = req.params;
+    const { status } = req.body;
+    const questionsData = readFile(QUESTIONS_FILE);
+
+    if (!questionsData[cedula]) {
+        return res.status(404).json({ message: 'Solicitud no encontrada' });
+    }
+
+    questionsData[cedula].status = status;
+    writeFile(QUESTIONS_FILE, questionsData);
+    res.status(200).json({ message: 'Estado de la solicitud actualizado con éxito' });
 });
 
 app.listen(PORT, () => {

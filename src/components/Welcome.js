@@ -51,7 +51,7 @@ const Welcome = () => {
             <div className={classes.heroContainer}>
                 <div className={classes.heroTextContainer}>
                     <Typography variant="h3" className={classes.heroText}>
-                        Bienvenido a la Residencia Universitaria{isAuthenticated ? `, ${user.isAdmin ? 'Admin' : user.name}` : ''}
+                        Bienvenido a la Residencia Universitaria{isAuthenticated ? `, ${user.isAdmin ? user.username : user.name}` : ''}
                     </Typography>
                 </div>
                 <Typography variant="h6" className={classes.subtitle}>

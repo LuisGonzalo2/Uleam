@@ -33,6 +33,7 @@ const App = () => {
                 <Route path="/admin" element={<AdminRoute><AdminPanel /></AdminRoute>} />
                 <Route path="/requests" element={<AdminRoute><Requests /></AdminRoute>} />
                 <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+                <Route path="request" element={<AdminRoute />}> <Route index element={<Requests />} /> </Route>
             </Routes>
         </Router>
     );
