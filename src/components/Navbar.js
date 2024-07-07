@@ -38,6 +38,11 @@ const Navbar = () => {
                         Mi Perfil
                     </Button>
                 )}
+                {isAuthenticated && user?.isAdmin && location.pathname !== '/admin-panel' && (
+                    <Button color="inherit" component={Link} to="/admin-panel">
+                        Panel
+                    </Button>
+                )}
                 {isAuthenticated && (
                     <Button color="inherit" onClick={handleLogout}>
                         Cerrar Sesión
