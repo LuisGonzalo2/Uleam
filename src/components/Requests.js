@@ -24,6 +24,11 @@ const Requests = () => {
         setSelectedRequest(null);
     };
 
+    const handleUpdateRequest = (cedula) => {
+        setRequests((prevRequests) => prevRequests.filter((request) => request.cedula !== cedula));
+        setSelectedRequest(null);
+    };
+
     return (
         <Container>
             <Typography variant="h4" gutterBottom>
@@ -37,7 +42,6 @@ const Requests = () => {
                             <TableCell>Nombre</TableCell>
                             <TableCell>Cédula</TableCell>
                             <TableCell>Preguntas</TableCell>
-                            <TableCell>Estado</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -51,7 +55,6 @@ const Requests = () => {
                                         Ver Detalle
                                     </Button>
                                 </TableCell>
-                                <TableCell>{request.status}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
@@ -69,7 +72,7 @@ const Requests = () => {
                 <Fade in={!!selectedRequest}>
                     <div onClick={handleClose} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
                         <div onClick={(e) => e.stopPropagation()}>
-                            {selectedRequest && <RequestDetailModal request={selectedRequest} onClose={handleClose} />}
+                            {selectedRequest && <RequestDetailModal request={selectedRequest} onClose={handleClose} onUpdate={handleUpdateRequest} />}
                         </div>
                     </div>
                 </Fade>
