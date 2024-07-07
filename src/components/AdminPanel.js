@@ -1,13 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Typography, Paper, Select, MenuItem, TextField, IconButton, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import { Container, Typography, Paper, Select, MenuItem, TextField, IconButton, Table, TableBody, TableCell, TableHead, TableRow, Button, Snackbar } from '@material-ui/core';
 import { Edit as EditIcon, Save as SaveIcon } from '@material-ui/icons';
+import MuiAlert from '@material-ui/lab/Alert';
 import axios from 'axios';
+import ManageResidenceModal from './ManageResidenceModal';
+
+const Alert = (props) => {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+};
 
 const AdminPanel = () => {
     const [filter, setFilter] = useState('registered');
     const [users, setUsers] = useState([]);
     const [editMode, setEditMode] = useState(null);
     const [editedData, setEditedData] = useState({});
+    const [selectedUser, setSelectedUser] = useState(null);
+    const [alert, setAlert] = useState({ open: false, severity: '', message: '' });
 
     useEffect(() => {
         fetchUsers();
@@ -18,13 +26,13 @@ const AdminPanel = () => {
         let filteredUsers = [];
         switch (filter) {
             case 'registered':
-                filteredUsers = Object.values(response.data);
+                filteredUsers = Object.values(response.data).filter(user => user.status === 'pending');
                 break;
             case 'approved':
                 filteredUsers = Object.values(response.data).filter(user => user.status === 'approved');
                 break;
             case 'withResidence':
-                filteredUsers = Object.values(response.data).filter(user => user.dormitory !== null);
+                filteredUsers = Object.values(response.data).filter(user => user.residency === true);
                 break;
             default:
                 filteredUsers = Object.values(response.data);
@@ -42,15 +50,41 @@ const AdminPanel = () => {
         try {
             await axios.put(`http://localhost:5000/users/${cedula}`, editedData);
             setEditMode(null);
+            setAlert({ open: true, severity: 'success', message: 'Datos actualizados correctamente' });
             fetchUsers();
         } catch (error) {
             console.error('Error updating user data:', error);
+            setAlert({ open: true, severity: 'error', message: 'Error actualizando los datos' });
         }
     };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setEditedData(prevData => ({ ...prevData, [name]: value }));
+    };
+
+    const handleManageClick = (user) => {
+        setSelectedUser(user);
+    };
+
+    const handleCloseManage = () => {
+        setSelectedUser(null);
+        fetchUsers();
+    };
+
+    const handleResidencyToggle = async (cedula, currentResidency) => {
+        try {
+            await axios.put(`http://localhost:5000/users/${cedula}`, { residency: !currentResidency });
+            setAlert({ open: true, severity: 'success', message: `Residencia ${!currentResidency ? 'asignada' : 'quitada'} correctamente` });
+            fetchUsers();
+        } catch (error) {
+            console.error('Error toggling residency:', error);
+            setAlert({ open: true, severity: 'error', message: 'Error cambiando la residencia' });
+        }
+    };
+
+    const handleCloseAlert = () => {
+        setAlert({ open: false, severity: '', message: '' });
     };
 
     const renderTable = () => {
@@ -178,13 +212,21 @@ const AdminPanel = () => {
                                         )}
                                     </TableCell>
                                     <TableCell>
-                                        {editMode === user.cedula ? (
+                                        {user.residency ? (
+                                            <Button variant="contained" color="secondary" onClick={() => handleResidencyToggle(user.cedula, user.residency)}>
+                                                Quitar Residencia
+                                            </Button>
+                                        ) : (
+                                            <Button variant="contained" color="primary" onClick={() => handleResidencyToggle(user.cedula, user.residency)}>
+                                                Dar Residencia
+                                            </Button>
+                                        )}
+                                        <IconButton onClick={() => handleEditClick(user.cedula)}>
+                                            <EditIcon />
+                                        </IconButton>
+                                        {editMode === user.cedula && (
                                             <IconButton onClick={() => handleSaveClick(user.cedula)}>
                                                 <SaveIcon />
-                                            </IconButton>
-                                        ) : (
-                                            <IconButton onClick={() => handleEditClick(user.cedula)}>
-                                                <EditIcon />
                                             </IconButton>
                                         )}
                                     </TableCell>
@@ -200,13 +242,6 @@ const AdminPanel = () => {
                             <TableRow>
                                 <TableCell>CI</TableCell>
                                 <TableCell>Nombre</TableCell>
-                                <TableCell>Correo Electrónico</TableCell>
-                                <TableCell>Dirección</TableCell>
-                                <TableCell>Teléfono</TableCell>
-                                <TableCell>Género</TableCell>
-                                <TableCell>Fecha de Nacimiento</TableCell>
-                                <TableCell>Discapacidad</TableCell>
-                                <TableCell>Dormitorio</TableCell>
                                 <TableCell>Acciones</TableCell>
                             </TableRow>
                         </TableHead>
@@ -214,72 +249,11 @@ const AdminPanel = () => {
                             {users.map(user => (
                                 <TableRow key={user.cedula}>
                                     <TableCell>{user.cedula}</TableCell>
+                                    <TableCell>{user.name}</TableCell>
                                     <TableCell>
-                                        {editMode === user.cedula ? (
-                                            <TextField name="name" value={editedData.name} onChange={handleChange} />
-                                        ) : (
-                                            user.name
-                                        )}
-                                    </TableCell>
-                                    <TableCell>
-                                        {editMode === user.cedula ? (
-                                            <TextField name="email" value={editedData.email} onChange={handleChange} />
-                                        ) : (
-                                            user.email
-                                        )}
-                                    </TableCell>
-                                    <TableCell>
-                                        {editMode === user.cedula ? (
-                                            <TextField name="address" value={editedData.address} onChange={handleChange} />
-                                        ) : (
-                                            user.address
-                                        )}
-                                    </TableCell>
-                                    <TableCell>
-                                        {editMode === user.cedula ? (
-                                            <TextField name="phone" value={editedData.phone} onChange={handleChange} />
-                                        ) : (
-                                            user.phone
-                                        )}
-                                    </TableCell>
-                                    <TableCell>
-                                        {editMode === user.cedula ? (
-                                            <TextField name="gender" value={editedData.gender} onChange={handleChange} />
-                                        ) : (
-                                            user.gender
-                                        )}
-                                    </TableCell>
-                                    <TableCell>
-                                        {editMode === user.cedula ? (
-                                            <TextField name="birthday" value={editedData.birthday} onChange={handleChange} />
-                                        ) : (
-                                            user.birthday
-                                        )}
-                                    </TableCell>
-                                    <TableCell>
-                                        {editMode === user.cedula ? (
-                                            <TextField name="disability" value={editedData.disability} onChange={handleChange} />
-                                        ) : (
-                                            user.disability
-                                        )}
-                                    </TableCell>
-                                    <TableCell>
-                                        {editMode === user.cedula ? (
-                                            <TextField name="dormitory" value={editedData.dormitory} onChange={handleChange} />
-                                        ) : (
-                                            user.dormitory
-                                        )}
-                                    </TableCell>
-                                    <TableCell>
-                                        {editMode === user.cedula ? (
-                                            <IconButton onClick={() => handleSaveClick(user.cedula)}>
-                                                <SaveIcon />
-                                            </IconButton>
-                                        ) : (
-                                            <IconButton onClick={() => handleEditClick(user.cedula)}>
-                                                <EditIcon />
-                                            </IconButton>
-                                        )}
+                                        <Button variant="contained" color="primary" onClick={() => handleManageClick(user)}>
+                                            Administrar
+                                        </Button>
                                     </TableCell>
                                 </TableRow>
                             ))}
@@ -304,6 +278,19 @@ const AdminPanel = () => {
             <Paper>
                 {renderTable()}
             </Paper>
+            {selectedUser && (
+                <ManageResidenceModal
+                    open={!!selectedUser}
+                    onClose={handleCloseManage}
+                    user={selectedUser}
+                    fetchUsers={fetchUsers}
+                />
+            )}
+            <Snackbar open={alert.open} autoHideDuration={6000} onClose={handleCloseAlert}>
+                <Alert onClose={handleCloseAlert} severity={alert.severity}>
+                    {alert.message}
+                </Alert>
+            </Snackbar>
         </Container>
     );
 };

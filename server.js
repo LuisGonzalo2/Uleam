@@ -48,7 +48,11 @@ app.post('/register', (req, res) => {
         birthday,
         disability,
         dormitory: null,
-        status: 'pending'
+        status: 'pending',
+        behavior: null,
+        companion: null,
+        note: null,
+        residency: false
     };
 
     writeFile(USERS_FILE, users);
@@ -148,6 +152,33 @@ app.put('/users/:cedula', (req, res) => {
     users[cedula] = { ...users[cedula], ...updatedData };
     writeFile(USERS_FILE, users);
     res.status(200).json({ message: 'Datos del usuario actualizados con éxito' });
+});
+
+app.put('/users/:cedula/residency', (req, res) => {
+    const { cedula } = req.params;
+    const { residency } = req.body;
+    const users = readFile(USERS_FILE);
+
+    if (!users[cedula]) {
+        return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+
+    users[cedula].residency = residency;
+    writeFile(USERS_FILE, users);
+    res.status(200).json({ message: 'Residencia actualizada con éxito' });
+});
+
+app.delete('/users/:cedula', (req, res) => {
+    const { cedula } = req.params;
+    const users = readFile(USERS_FILE);
+
+    if (!users[cedula]) {
+        return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+
+    delete users[cedula];
+    writeFile(USERS_FILE, users);
+    res.status(200).json({ message: 'Usuario expulsado con éxito' });
 });
 
 app.listen(PORT, () => {

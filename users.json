@@ -9,10 +9,15 @@
     "gender": "male",
     "birthday": "1990-01-01",
     "disability": "no",
-    "dormitory": null
+    "dormitory": null,
+    "status": "rejected",
+    "behavior": null,
+    "companion": null,
+    "note": null,
+    "residency": false
   },
   "1722680400": {
-    "name": "Gon ",
+    "name": "Gon",
     "email": "gonluiz.hispa@gmail.com",
     "password": "Agjh2901",
     "address": "3145, Montecristi ee",
@@ -21,7 +26,12 @@
     "gender": "male",
     "birthday": "2024-06-12",
     "disability": "no",
-    "dormitory": null,
-    "status": "approved"
+    "dormitory": "",
+    "status": "approved",
+    "behavior": "mala",
+    "companion": null,
+    "note": "",
+    "residency": true,
+    "roommate": "1722680400"
   }
 }
