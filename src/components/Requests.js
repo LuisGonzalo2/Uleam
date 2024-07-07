@@ -67,8 +67,10 @@ const Requests = () => {
                 }}
             >
                 <Fade in={!!selectedRequest}>
-                    <div>
-                        {selectedRequest && <RequestDetailModal request={selectedRequest} onClose={handleClose} />}
+                    <div onClick={handleClose} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+                        <div onClick={(e) => e.stopPropagation()}>
+                            {selectedRequest && <RequestDetailModal request={selectedRequest} onClose={handleClose} />}
+                        </div>
                     </div>
                 </Fade>
             </Modal>
