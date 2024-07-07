@@ -11,7 +11,10 @@ import Apply from "./components/Apply";
 import About from './components/About';
 import Services from './components/Services';
 import Contact from './components/Contact';
-import PrivateRoute from './components/PrivateRoute';
+import AdminPanel from './components/AdminPanel';
+import Requests from './components/Requests';
+import ProtectedRoute from './components/ProtectedRoute';
+import AdminRoute from './components/AdminRoute';
 
 const App = () => {
     return (
@@ -23,13 +26,37 @@ const App = () => {
                 <Route path="/about" element={<About />} />
                 <Route path="/services" element={<Services />} />
                 <Route path="/contact" element={<Contact />} />
-                <Route path="/register" element={<Register />} />
+                <Route path="/register" element={
+                    <ProtectedRoute>
+                        <Register />
+                    </ProtectedRoute>
+                } />
                 <Route path="/login" element={<Login />} />
-                <Route path="/apply" element={<Apply />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/home" element={<PrivateRoute />}>
-                    <Route index element={<Home />} />
-                </Route>
+                <Route path="/apply" element={
+                    <ProtectedRoute>
+                        <Apply />
+                    </ProtectedRoute>
+                } />
+                <Route path="/profile" element={
+                    <ProtectedRoute>
+                        <Profile />
+                    </ProtectedRoute>
+                } />
+                <Route path="/admin" element={
+                    <AdminRoute>
+                        <AdminPanel />
+                    </AdminRoute>
+                } />
+                <Route path="/requests" element={
+                    <AdminRoute>
+                        <Requests />
+                    </AdminRoute>
+                } />
+                <Route path="/home" element={
+                    <ProtectedRoute>
+                        <Home />
+                    </ProtectedRoute>
+                } />
             </Routes>
         </Router>
     );
