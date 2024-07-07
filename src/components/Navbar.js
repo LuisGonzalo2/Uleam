@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import universityLogo from '../assets/download.png'; // Logo de la universidad
 
 const Navbar = () => {
-    const { isAuthenticated, logout } = useAuth();
+    const { isAuthenticated, user, logout } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -15,7 +15,7 @@ const Navbar = () => {
     };
 
     return (
-        <AppBar position="static">
+        <AppBar position="static" style={{ backgroundColor: user?.isAdmin ? 'darkred' : 'blue' }}>
             <Toolbar>
                 <Box display="flex" alignItems="center" flexGrow={1}>
                     <img src={universityLogo} alt="Universidad Laica Eloy Alfaro de Manabí" style={{ width: 50, marginRight: 10 }} />
@@ -33,7 +33,7 @@ const Navbar = () => {
                         Iniciar Sesión
                     </Button>
                 )}
-                {isAuthenticated && location.pathname !== '/profile' && (
+                {isAuthenticated && !user?.isAdmin && location.pathname !== '/profile' && (
                     <Button color="inherit" component={Link} to="/profile">
                         Mi Perfil
                     </Button>

@@ -10,6 +10,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 const USERS_FILE = './users.json';
+const ADMINS_FILE = './admins.json';
 const QUESTIONS_FILE = './questions.json';
 
 const readFile = (file) => {
@@ -56,12 +57,22 @@ app.post('/register', (req, res) => {
 app.post('/login', (req, res) => {
     const { identifier, password } = req.body;
     const users = readFile(USERS_FILE);
-    const user = Object.values(users).find(
+    const admins = readFile(ADMINS_FILE);
+
+    let user = Object.values(users).find(
         (user) => (user.email === identifier || user.cedula === identifier) && user.password === password
     );
 
     if (!user) {
-        return res.status(400).json({ message: 'Credenciales incorrectas' });
+        user = admins.find(
+            (admin) => admin.username === identifier && admin.password === password
+        );
+        if (!user) {
+            return res.status(400).json({ message: 'Credenciales incorrectas' });
+        }
+        user.isAdmin = true;
+    } else {
+        user.isAdmin = false;
     }
 
     res.status(200).json({ message: 'Inicio de sesión exitoso', user });
