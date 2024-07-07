@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Typography, Button, Table, TableBody, TableCell, TableHead, TableRow, Paper, Select, MenuItem, TextField, IconButton } from '@material-ui/core';
+import { Container, Typography, Paper, Select, MenuItem, TextField, IconButton, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import { Edit as EditIcon, Save as SaveIcon } from '@material-ui/icons';
 import axios from 'axios';
 
@@ -18,7 +18,7 @@ const AdminPanel = () => {
         let filteredUsers = [];
         switch (filter) {
             case 'registered':
-                filteredUsers = Object.values(response.data).filter(user => user.status === 'pending');
+                filteredUsers = Object.values(response.data);
                 break;
             case 'approved':
                 filteredUsers = Object.values(response.data).filter(user => user.status === 'approved');
@@ -53,6 +53,244 @@ const AdminPanel = () => {
         setEditedData(prevData => ({ ...prevData, [name]: value }));
     };
 
+    const renderTable = () => {
+        switch (filter) {
+            case 'registered':
+                return (
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>CI</TableCell>
+                                <TableCell>Nombre</TableCell>
+                                <TableCell>Correo Electrónico</TableCell>
+                                <TableCell>Contraseña</TableCell>
+                                <TableCell>Acciones</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {users.map(user => (
+                                <TableRow key={user.cedula}>
+                                    <TableCell>{user.cedula}</TableCell>
+                                    <TableCell>
+                                        {editMode === user.cedula ? (
+                                            <TextField name="name" value={editedData.name} onChange={handleChange} />
+                                        ) : (
+                                            user.name
+                                        )}
+                                    </TableCell>
+                                    <TableCell>
+                                        {editMode === user.cedula ? (
+                                            <TextField name="email" value={editedData.email} onChange={handleChange} />
+                                        ) : (
+                                            user.email
+                                        )}
+                                    </TableCell>
+                                    <TableCell>
+                                        {editMode === user.cedula ? (
+                                            <TextField name="password" value={editedData.password} onChange={handleChange} />
+                                        ) : (
+                                            user.password
+                                        )}
+                                    </TableCell>
+                                    <TableCell>
+                                        {editMode === user.cedula ? (
+                                            <IconButton onClick={() => handleSaveClick(user.cedula)}>
+                                                <SaveIcon />
+                                            </IconButton>
+                                        ) : (
+                                            <IconButton onClick={() => handleEditClick(user.cedula)}>
+                                                <EditIcon />
+                                            </IconButton>
+                                        )}
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                );
+            case 'approved':
+                return (
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>CI</TableCell>
+                                <TableCell>Nombre</TableCell>
+                                <TableCell>Correo Electrónico</TableCell>
+                                <TableCell>Dirección</TableCell>
+                                <TableCell>Teléfono</TableCell>
+                                <TableCell>Género</TableCell>
+                                <TableCell>Fecha de Nacimiento</TableCell>
+                                <TableCell>Discapacidad</TableCell>
+                                <TableCell>Acciones</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {users.map(user => (
+                                <TableRow key={user.cedula}>
+                                    <TableCell>{user.cedula}</TableCell>
+                                    <TableCell>
+                                        {editMode === user.cedula ? (
+                                            <TextField name="name" value={editedData.name} onChange={handleChange} />
+                                        ) : (
+                                            user.name
+                                        )}
+                                    </TableCell>
+                                    <TableCell>
+                                        {editMode === user.cedula ? (
+                                            <TextField name="email" value={editedData.email} onChange={handleChange} />
+                                        ) : (
+                                            user.email
+                                        )}
+                                    </TableCell>
+                                    <TableCell>
+                                        {editMode === user.cedula ? (
+                                            <TextField name="address" value={editedData.address} onChange={handleChange} />
+                                        ) : (
+                                            user.address
+                                        )}
+                                    </TableCell>
+                                    <TableCell>
+                                        {editMode === user.cedula ? (
+                                            <TextField name="phone" value={editedData.phone} onChange={handleChange} />
+                                        ) : (
+                                            user.phone
+                                        )}
+                                    </TableCell>
+                                    <TableCell>
+                                        {editMode === user.cedula ? (
+                                            <TextField name="gender" value={editedData.gender} onChange={handleChange} />
+                                        ) : (
+                                            user.gender
+                                        )}
+                                    </TableCell>
+                                    <TableCell>
+                                        {editMode === user.cedula ? (
+                                            <TextField name="birthday" value={editedData.birthday} onChange={handleChange} />
+                                        ) : (
+                                            user.birthday
+                                        )}
+                                    </TableCell>
+                                    <TableCell>
+                                        {editMode === user.cedula ? (
+                                            <TextField name="disability" value={editedData.disability} onChange={handleChange} />
+                                        ) : (
+                                            user.disability
+                                        )}
+                                    </TableCell>
+                                    <TableCell>
+                                        {editMode === user.cedula ? (
+                                            <IconButton onClick={() => handleSaveClick(user.cedula)}>
+                                                <SaveIcon />
+                                            </IconButton>
+                                        ) : (
+                                            <IconButton onClick={() => handleEditClick(user.cedula)}>
+                                                <EditIcon />
+                                            </IconButton>
+                                        )}
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                );
+            case 'withResidence':
+                return (
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>CI</TableCell>
+                                <TableCell>Nombre</TableCell>
+                                <TableCell>Correo Electrónico</TableCell>
+                                <TableCell>Dirección</TableCell>
+                                <TableCell>Teléfono</TableCell>
+                                <TableCell>Género</TableCell>
+                                <TableCell>Fecha de Nacimiento</TableCell>
+                                <TableCell>Discapacidad</TableCell>
+                                <TableCell>Dormitorio</TableCell>
+                                <TableCell>Acciones</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {users.map(user => (
+                                <TableRow key={user.cedula}>
+                                    <TableCell>{user.cedula}</TableCell>
+                                    <TableCell>
+                                        {editMode === user.cedula ? (
+                                            <TextField name="name" value={editedData.name} onChange={handleChange} />
+                                        ) : (
+                                            user.name
+                                        )}
+                                    </TableCell>
+                                    <TableCell>
+                                        {editMode === user.cedula ? (
+                                            <TextField name="email" value={editedData.email} onChange={handleChange} />
+                                        ) : (
+                                            user.email
+                                        )}
+                                    </TableCell>
+                                    <TableCell>
+                                        {editMode === user.cedula ? (
+                                            <TextField name="address" value={editedData.address} onChange={handleChange} />
+                                        ) : (
+                                            user.address
+                                        )}
+                                    </TableCell>
+                                    <TableCell>
+                                        {editMode === user.cedula ? (
+                                            <TextField name="phone" value={editedData.phone} onChange={handleChange} />
+                                        ) : (
+                                            user.phone
+                                        )}
+                                    </TableCell>
+                                    <TableCell>
+                                        {editMode === user.cedula ? (
+                                            <TextField name="gender" value={editedData.gender} onChange={handleChange} />
+                                        ) : (
+                                            user.gender
+                                        )}
+                                    </TableCell>
+                                    <TableCell>
+                                        {editMode === user.cedula ? (
+                                            <TextField name="birthday" value={editedData.birthday} onChange={handleChange} />
+                                        ) : (
+                                            user.birthday
+                                        )}
+                                    </TableCell>
+                                    <TableCell>
+                                        {editMode === user.cedula ? (
+                                            <TextField name="disability" value={editedData.disability} onChange={handleChange} />
+                                        ) : (
+                                            user.disability
+                                        )}
+                                    </TableCell>
+                                    <TableCell>
+                                        {editMode === user.cedula ? (
+                                            <TextField name="dormitory" value={editedData.dormitory} onChange={handleChange} />
+                                        ) : (
+                                            user.dormitory
+                                        )}
+                                    </TableCell>
+                                    <TableCell>
+                                        {editMode === user.cedula ? (
+                                            <IconButton onClick={() => handleSaveClick(user.cedula)}>
+                                                <SaveIcon />
+                                            </IconButton>
+                                        ) : (
+                                            <IconButton onClick={() => handleEditClick(user.cedula)}>
+                                                <EditIcon />
+                                            </IconButton>
+                                        )}
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                );
+            default:
+                return null;
+        }
+    };
+
     return (
         <Container>
             <Typography variant="h4" gutterBottom>
@@ -64,96 +302,7 @@ const AdminPanel = () => {
                 <MenuItem value="withResidence">Usuarios con Residencia</MenuItem>
             </Select>
             <Paper>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>CI</TableCell>
-                            <TableCell>Nombre</TableCell>
-                            <TableCell>Correo Electrónico</TableCell>
-                            <TableCell>Dirección</TableCell>
-                            <TableCell>Teléfono</TableCell>
-                            <TableCell>Género</TableCell>
-                            <TableCell>Fecha de Nacimiento</TableCell>
-                            <TableCell>Discapacidad</TableCell>
-                            <TableCell>Contraseña</TableCell>
-                            <TableCell>Acciones</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {users.map(user => (
-                            <TableRow key={user.cedula}>
-                                <TableCell>{user.cedula}</TableCell>
-                                <TableCell>
-                                    {editMode === user.cedula ? (
-                                        <TextField name="name" value={editedData.name} onChange={handleChange} />
-                                    ) : (
-                                        user.name
-                                    )}
-                                </TableCell>
-                                <TableCell>
-                                    {editMode === user.cedula ? (
-                                        <TextField name="email" value={editedData.email} onChange={handleChange} />
-                                    ) : (
-                                        user.email
-                                    )}
-                                </TableCell>
-                                <TableCell>
-                                    {editMode === user.cedula ? (
-                                        <TextField name="address" value={editedData.address} onChange={handleChange} />
-                                    ) : (
-                                        user.address
-                                    )}
-                                </TableCell>
-                                <TableCell>
-                                    {editMode === user.cedula ? (
-                                        <TextField name="phone" value={editedData.phone} onChange={handleChange} />
-                                    ) : (
-                                        user.phone
-                                    )}
-                                </TableCell>
-                                <TableCell>
-                                    {editMode === user.cedula ? (
-                                        <TextField name="gender" value={editedData.gender} onChange={handleChange} />
-                                    ) : (
-                                        user.gender
-                                    )}
-                                </TableCell>
-                                <TableCell>
-                                    {editMode === user.cedula ? (
-                                        <TextField name="birthday" value={editedData.birthday} onChange={handleChange} />
-                                    ) : (
-                                        user.birthday
-                                    )}
-                                </TableCell>
-                                <TableCell>
-                                    {editMode === user.cedula ? (
-                                        <TextField name="disability" value={editedData.disability} onChange={handleChange} />
-                                    ) : (
-                                        user.disability
-                                    )}
-                                </TableCell>
-                                <TableCell>
-                                    {editMode === user.cedula ? (
-                                        <TextField name="password" value={editedData.password} onChange={handleChange} />
-                                    ) : (
-                                        user.password
-                                    )}
-                                </TableCell>
-                                <TableCell>
-                                    {editMode === user.cedula ? (
-                                        <IconButton onClick={() => handleSaveClick(user.cedula)}>
-                                            <SaveIcon />
-                                        </IconButton>
-                                    ) : (
-                                        <IconButton onClick={() => handleEditClick(user.cedula)}>
-                                            <EditIcon />
-                                        </IconButton>
-                                    )}
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
+                {renderTable()}
             </Paper>
         </Container>
     );
