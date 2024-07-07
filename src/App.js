@@ -7,7 +7,7 @@ import Register from './components/Register';
 import Login from './components/Login';
 import Profile from './components/Profile';
 import Welcome from './components/Welcome';
-import Apply from "./components/Apply";
+import Apply from './components/Apply';
 import About from './components/About';
 import Services from './components/Services';
 import Contact from './components/Contact';
@@ -26,37 +26,13 @@ const App = () => {
                 <Route path="/about" element={<About />} />
                 <Route path="/services" element={<Services />} />
                 <Route path="/contact" element={<Contact />} />
-                <Route path="/register" element={
-                    <ProtectedRoute>
-                        <Register />
-                    </ProtectedRoute>
-                } />
-                <Route path="/login" element={<Login />} />
-                <Route path="/apply" element={
-                    <ProtectedRoute>
-                        <Apply />
-                    </ProtectedRoute>
-                } />
-                <Route path="/profile" element={
-                    <ProtectedRoute>
-                        <Profile />
-                    </ProtectedRoute>
-                } />
-                <Route path="/admin" element={
-                    <AdminRoute>
-                        <AdminPanel />
-                    </AdminRoute>
-                } />
-                <Route path="/requests" element={
-                    <AdminRoute>
-                        <Requests />
-                    </AdminRoute>
-                } />
-                <Route path="/home" element={
-                    <ProtectedRoute>
-                        <Home />
-                    </ProtectedRoute>
-                } />
+                <Route path="/register" element={<ProtectedRoute reverse><Register /></ProtectedRoute>} />
+                <Route path="/login" element={<ProtectedRoute reverse><Login /></ProtectedRoute>} />
+                <Route path="/apply" element={<ProtectedRoute><Apply /></ProtectedRoute>} />
+                <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+                <Route path="/admin" element={<AdminRoute><AdminPanel /></AdminRoute>} />
+                <Route path="/requests" element={<AdminRoute><Requests /></AdminRoute>} />
+                <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
             </Routes>
         </Router>
     );
