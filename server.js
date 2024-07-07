@@ -29,6 +29,7 @@ const writeFile = (file, data) => {
     }
 };
 
+
 app.post('/register', (req, res) => {
     const { name, email, password, address, phone, cedula, gender, birthday, disability } = req.body;
     const users = readFile(USERS_FILE);
@@ -47,7 +48,8 @@ app.post('/register', (req, res) => {
         gender,
         birthday,
         disability,
-        dormitory: null
+        dormitory: null,
+        status: 'pending'
     };
 
     writeFile(USERS_FILE, users);
@@ -120,6 +122,13 @@ app.put('/questions/:cedula', (req, res) => {
 
     questionsData[cedula].status = status;
     writeFile(QUESTIONS_FILE, questionsData);
+
+    const users = readFile(USERS_FILE);
+    if (users[cedula]) {
+        users[cedula].status = status;
+        writeFile(USERS_FILE, users);
+    }
+
     res.status(200).json({ message: 'Estado de la solicitud actualizado con éxito' });
 });
 

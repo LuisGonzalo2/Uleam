@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Typography, Button, Table, TableBody, TableCell, TableHead, TableRow, Paper, Modal, Backdrop, Fade } from '@material-ui/core';
+import { Container, Typography, Button, Table, TableBody, TableCell, TableHead, TableRow, Paper, Modal, Backdrop, Fade, Snackbar } from '@material-ui/core';
+import MuiAlert from '@material-ui/lab/Alert';
 import axios from 'axios';
 import RequestDetailModal from './RequestDetailModal';
+
+const Alert = (props) => {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+};
 
 const Requests = () => {
     const [requests, setRequests] = useState([]);
     const [selectedRequest, setSelectedRequest] = useState(null);
+    const [alert, setAlert] = useState({ open: false, severity: '', message: '' });
 
     useEffect(() => {
         const fetchRequests = async () => {
             const response = await axios.get('http://localhost:5000/questions');
-            setRequests(Object.values(response.data));
+            setRequests(Object.values(response.data).filter(request => request.status === 'pending'));
         };
 
         fetchRequests();
@@ -24,9 +30,20 @@ const Requests = () => {
         setSelectedRequest(null);
     };
 
-    const handleUpdateRequest = (cedula) => {
-        setRequests((prevRequests) => prevRequests.filter((request) => request.cedula !== cedula));
-        setSelectedRequest(null);
+    const handleStatusChange = async (cedula, status) => {
+        try {
+            await axios.put(`http://localhost:5000/questions/${cedula}`, { status });
+            setRequests(prevRequests => prevRequests.filter(request => request.cedula !== cedula));
+            setAlert({ open: true, severity: 'success', message: `Solicitud ${status === 'approved' ? 'aprobada' : 'rechazada'} con éxito` });
+            handleClose();
+        } catch (error) {
+            console.error('Error updating status:', error);
+            setAlert({ open: true, severity: 'error', message: 'Error actualizando el estado de la solicitud' });
+        }
+    };
+
+    const handleCloseAlert = () => {
+        setAlert({ open: false, severity: '', message: '' });
     };
 
     return (
@@ -70,13 +87,16 @@ const Requests = () => {
                 }}
             >
                 <Fade in={!!selectedRequest}>
-                    <div onClick={handleClose} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-                        <div onClick={(e) => e.stopPropagation()}>
-                            {selectedRequest && <RequestDetailModal request={selectedRequest} onClose={handleClose} onUpdate={handleUpdateRequest} />}
-                        </div>
+                    <div>
+                        {selectedRequest && <RequestDetailModal request={selectedRequest} onClose={handleClose} onStatusChange={handleStatusChange} />}
                     </div>
                 </Fade>
             </Modal>
+            <Snackbar open={alert.open} autoHideDuration={6000} onClose={handleCloseAlert}>
+                <Alert onClose={handleCloseAlert} severity={alert.severity}>
+                    {alert.message}
+                </Alert>
+            </Snackbar>
         </Container>
     );
 };

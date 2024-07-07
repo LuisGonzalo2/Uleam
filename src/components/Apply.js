@@ -70,6 +70,17 @@ const Apply = () => {
         }
     };
 
+    const handleReapply = () => {
+        setStatus('');
+        setFormData({
+            question1: '',
+            question2: '',
+            question3: '',
+            question4: '',
+            question5: '',
+        });
+    };
+
     const handleCloseAlert = () => {
         setAlert({ open: false, severity: '', message: '' });
     };
@@ -87,6 +98,24 @@ const Apply = () => {
                     <Typography variant="h6" className={classes.subtitle}>
                         Tu solicitud está en proceso de aprobación.
                     </Typography>
+                ) : status === 'approved' ? (
+                    <>
+                        <Typography variant="h6" className={classes.subtitle}>
+                            Tu solicitud ha sido aprobada.
+                        </Typography>
+                        <Button variant="contained" color="primary" href="/residencia">
+                            Residencia
+                        </Button>
+                    </>
+                ) : status === 'rejected' ? (
+                    <>
+                        <Typography variant="h6" className={classes.subtitle}>
+                            Tu solicitud ha sido rechazada.
+                        </Typography>
+                        <Button variant="contained" color="secondary" onClick={handleReapply}>
+                            Rellenar de nuevo
+                        </Button>
+                    </>
                 ) : (
                     <Formik
                         initialValues={formData}

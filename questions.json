@@ -3,11 +3,11 @@
     "name": "Gon ",
     "cedula": "1722680400",
     "questions": {
-      "question1": "ad",
-      "question2": "asda",
-      "question3": "das",
-      "question4": "adsad",
-      "question5": "asda"
+      "question1": "asd",
+      "question2": "a",
+      "question3": "sdad",
+      "question4": "asda",
+      "question5": "das"
     },
     "status": "approved"
   },
@@ -18,6 +18,6 @@
       "question1": "respuesta1",
       "question2": "respuesta2"
     },
-    "status": "pending"
+    "status": "approved"
   }
 }

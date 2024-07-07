@@ -21,6 +21,7 @@
     "gender": "male",
     "birthday": "2024-06-12",
     "disability": "no",
-    "dormitory": null
+    "dormitory": null,
+    "status": "approved"
   }
 }

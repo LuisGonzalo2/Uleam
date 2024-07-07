@@ -38,9 +38,14 @@ const Navbar = () => {
                         Mi Perfil
                     </Button>
                 )}
-                {isAuthenticated && user?.isAdmin && location.pathname !== '/admin' && (
-                    <Button color="inherit" component={Link} to="/admin">
+                {isAuthenticated && user?.isAdmin && (
+                    <Button color="inherit" component={Link} to="/admin-panel">
                         Panel
+                    </Button>
+                )}
+                {isAuthenticated && user?.status === 'approved' && (
+                    <Button color="inherit" component={Link} to="/residencia">
+                        Residencia
                     </Button>
                 )}
                 {isAuthenticated && (
