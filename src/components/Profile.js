@@ -58,7 +58,7 @@ const Profile = () => {
             return;
         }
         try {
-            await axios.put(`http://localhost:5000/users/${user.cedula}`, formData);
+            await axios.put(`${process.env.REACT_APP_API_URL}/users/${user.cedula}`, formData);
             setUser({ ...user, ...formData });  // Aseguramos que se actualice el estado del usuario con los nuevos datos
             setMessage('Datos actualizados correctamente');
             setOpen(true);

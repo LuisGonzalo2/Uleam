@@ -15,7 +15,7 @@ const Requests = () => {
 
     useEffect(() => {
         const fetchRequests = async () => {
-            const response = await axios.get('http://localhost:5000/questions');
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}/questions`);
             setRequests(Object.values(response.data).filter(request => request.status === 'pending'));
         };
 
@@ -32,7 +32,7 @@ const Requests = () => {
 
     const handleStatusChange = async (cedula, status) => {
         try {
-            await axios.put(`http://localhost:5000/questions/${cedula}`, { status });
+            await axios.put(`${process.env.REACT_APP_API_URL}/questions/${cedula}`, { status });
             setRequests(prevRequests => prevRequests.filter(request => request.cedula !== cedula));
             setAlert({ open: true, severity: 'success', message: `Solicitud ${status === 'approved' ? 'aprobada' : 'rechazada'} con éxito` });
             handleClose();
