@@ -15,13 +15,15 @@ const CreditCardModal = ({ open, onClose, onCardSubmit }) => {
 
     const handleCardNumberChange = (e) => {
         const { value } = e.target;
-        const formattedValue = value.replace(/\s+/g, '').replace(/(\d{4})/g, '$1 ').trim();
+        const onlyNumbers = value.replace(/[^\d]/g, '');
+        const formattedValue = onlyNumbers.replace(/(\d{4})(?=\d)/g, '$1 ').trim();
         setCardNumber(formattedValue);
     };
 
     const handleExpiryDateChange = (e) => {
         const { value } = e.target;
-        const formattedValue = value.replace(
+        const onlyNumbers = value.replace(/[^\d]/g, '');
+        const formattedValue = onlyNumbers.replace(
             /^(\d{2})(\d{0,2})$/,
             (match, p1, p2) => (p2 ? `${p1}/${p2}` : p1)
         );
