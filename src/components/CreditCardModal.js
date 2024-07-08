@@ -11,6 +11,7 @@ const CreditCardModal = ({ open, onClose, onCardSubmit }) => {
     const [expiryDate, setExpiryDate] = useState('');
     const [cvv, setCvv] = useState('');
     const [isFlipped, setIsFlipped] = useState(false);
+    const [labelColor, setLabelColor] = useState('#000'); // Estado para el color del label
 
     const handleCardNumberChange = (e) => {
         const { value } = e.target;
@@ -40,6 +41,10 @@ const CreditCardModal = ({ open, onClose, onCardSubmit }) => {
             return;
         }
         onCardSubmit({ cardNumber, cardName, expiryDate, cvv });
+    };
+
+    const handleLabelColorChange = (e) => {
+        setLabelColor(e.target.value);
     };
 
     return (
@@ -87,6 +92,9 @@ const CreditCardModal = ({ open, onClose, onCardSubmit }) => {
                                     inputProps: { maxLength: 19 },
                                     startAdornment: <InputAdornment position="start">💳</InputAdornment>,
                                 }}
+                                InputLabelProps={{
+                                    style: { color: labelColor },
+                                }}
                             />
                             <TextField
                                 label="Nombre en la Tarjeta"
@@ -95,6 +103,9 @@ const CreditCardModal = ({ open, onClose, onCardSubmit }) => {
                                 onChange={(e) => setCardName(e.target.value)}
                                 InputProps={{
                                     startAdornment: <InputAdornment position="start">👤</InputAdornment>,
+                                }}
+                                InputLabelProps={{
+                                    style: { color: labelColor },
                                 }}
                                 style={{ marginTop: '16px' }}
                             />
@@ -107,6 +118,9 @@ const CreditCardModal = ({ open, onClose, onCardSubmit }) => {
                                     inputProps: { maxLength: 5 },
                                     startAdornment: <InputAdornment position="start">📅</InputAdornment>,
                                 }}
+                                InputLabelProps={{
+                                    style: { color: labelColor },
+                                }}
                                 style={{ marginTop: '16px' }}
                             />
                             <TextField
@@ -117,6 +131,9 @@ const CreditCardModal = ({ open, onClose, onCardSubmit }) => {
                                 InputProps={{
                                     inputProps: { maxLength: 3 },
                                     startAdornment: <InputAdornment position="start">🔒</InputAdornment>,
+                                }}
+                                InputLabelProps={{
+                                    style: { color: labelColor },
                                 }}
                                 style={{ marginTop: '16px' }}
                             />
