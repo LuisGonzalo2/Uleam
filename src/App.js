@@ -15,6 +15,7 @@ import AdminPanel from './components/AdminPanel';
 import Requests from './components/Requests';
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminRoute from './components/AdminRoute';
+import Residencia from "./components/Residencia";
 
 const App = () => {
     return (
@@ -34,6 +35,7 @@ const App = () => {
                 <Route path="/requests" element={<AdminRoute><Requests /></AdminRoute>} />
                 <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
                 <Route path="request" element={<AdminRoute />}> <Route index element={<Requests />} /> </Route>
+                <Route path="/residencia" element={<ProtectedRoute><Residencia /></ProtectedRoute>} />
             </Routes>
         </Router>
     );
