@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Container, Typography, Paper, Select, MenuItem, TextField, IconButton, Table, TableBody, TableCell, TableHead, TableRow, Button, Snackbar } from '@material-ui/core';
 import { Edit as EditIcon, Save as SaveIcon } from '@material-ui/icons';
 import MuiAlert from '@material-ui/lab/Alert';
@@ -17,16 +17,12 @@ const AdminPanel = () => {
     const [selectedUser, setSelectedUser] = useState(null);
     const [alert, setAlert] = useState({ open: false, severity: '', message: '' });
 
-    useEffect(() => {
-        fetchUsers();
-    }, [filter]);
-
-    const fetchUsers = async () => {
+    const fetchUsers = useCallback(async () => {
         const response = await axios.get('http://localhost:5000/users');
         let filteredUsers = [];
         switch (filter) {
             case 'registered':
-                filteredUsers = Object.values(response.data);//todos los usuarios
+                filteredUsers = Object.values(response.data);
                 break;
             case 'approved':
                 filteredUsers = Object.values(response.data).filter(user => user.status === 'approved');
@@ -38,7 +34,11 @@ const AdminPanel = () => {
                 filteredUsers = Object.values(response.data);
         }
         setUsers(filteredUsers);
-    };
+    }, [filter]);
+
+    useEffect(() => {
+        fetchUsers();
+    }, [fetchUsers]);
 
     const handleEditClick = (cedula) => {
         setEditMode(cedula);

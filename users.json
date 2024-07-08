@@ -28,10 +28,10 @@
     "disability": "no",
     "dormitory": "",
     "status": "approved",
-    "behavior": "mala",
+    "behavior": "regular",
     "companion": null,
     "note": "",
     "residency": true,
-    "roommate": "1722680400"
+    "roommate": ""
   }
 }
