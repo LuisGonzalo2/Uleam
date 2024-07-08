@@ -2,24 +2,26 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
-        padding: theme.spacing(3),
-        margin: theme.spacing(3),
-        maxWidth: '100%',
-        boxShadow: theme.shadows[3],
+        padding: theme.spacing(4),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        backgroundColor: '#ffffff',
+        boxShadow: theme.shadows[5],
     },
     title: {
         marginBottom: theme.spacing(2),
         fontWeight: 'bold',
     },
-    modal: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+    subtitle: {
+        marginBottom: theme.spacing(2),
+        fontStyle: 'italic',
     },
-    buttonGroup: {
-        display: 'flex',
-        justifyContent: 'space-between',
+    residencyDetails: {
         marginTop: theme.spacing(2),
+        '& > div': {
+            marginBottom: theme.spacing(1),
+        },
     },
 }));
 

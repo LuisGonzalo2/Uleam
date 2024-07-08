@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Typography, Paper } from '@material-ui/core';
+import { Container, Typography, Paper, Grid, Box } from '@material-ui/core';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import useStyles from '../styles/ResidenciaStyles';
@@ -7,18 +7,32 @@ import useStyles from '../styles/ResidenciaStyles';
 const Residencia = () => {
     const classes = useStyles();
     const { user } = useAuth();
-    const [residencyStatus, setResidencyStatus] = useState(false);
+    const [residencyData, setResidencyData] = useState(null);
+    const [roommateName, setRoommateName] = useState('');
 
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                console.log(`Fetching data for user cedula: ${user.cedula}`); // Agrega este log
                 const response = await axios.get(`http://localhost:5000/users/${user.cedula}`);
                 if (response.data) {
-                    setResidencyStatus(response.data.residency);
+                    setResidencyData(response.data);
+                    if (response.data.roommate) {
+                        fetchRoommateName(response.data.roommate);
+                    }
                 }
             } catch (error) {
                 console.error('Error fetching user data:', error);
+            }
+        };
+
+        const fetchRoommateName = async (roommateCedula) => {
+            try {
+                const response = await axios.get(`http://localhost:5000/users/${roommateCedula}`);
+                if (response.data) {
+                    setRoommateName(response.data.name);
+                }
+            } catch (error) {
+                console.error('Error fetching roommate data:', error);
             }
         };
 
@@ -34,13 +48,35 @@ const Residencia = () => {
                 <Typography variant="h6" className={classes.subtitle}>
                     Bienvenido, {user.name} ({user.cedula})
                 </Typography>
-                {residencyStatus ? (
-                    <Typography variant="h6" className={classes.subtitle}>
-                        Tu residencia ha sido asignada. ¡Bienvenido a tu nuevo hogar!
-                    </Typography>
+                {residencyData ? (
+                    residencyData.residency ? (
+                        <Box mt={4}>
+                            <Typography variant="h6" className={classes.subtitle}>
+                                Tu residencia ha sido asignada. ¡Bienvenido a tu nuevo hogar!
+                            </Typography>
+                            <Grid container spacing={2} className={classes.residencyDetails}>
+                                <Grid item xs={12} sm={6}>
+                                    <Typography variant="subtitle1"><strong>Comportamiento:</strong> {residencyData.behavior}</Typography>
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <Typography variant="subtitle1"><strong>Número de Dormitorio:</strong> {residencyData.dormitory}</Typography>
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <Typography variant="subtitle1"><strong>Nota:</strong> {residencyData.note}</Typography>
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <Typography variant="subtitle1"><strong>Compañero de cuarto:</strong> {roommateName}</Typography>
+                                </Grid>
+                            </Grid>
+                        </Box>
+                    ) : (
+                        <Typography variant="h6" className={classes.subtitle}>
+                            Tu solicitud ha sido aprobada, pero aún estás a la espera de la asignación de residencia por parte del supervisor.
+                        </Typography>
+                    )
                 ) : (
                     <Typography variant="h6" className={classes.subtitle}>
-                        Tu solicitud ha sido aprobada, pero aún estás a la espera de la asignación de residencia por parte del supervisor.
+                        Cargando datos...
                     </Typography>
                 )}
             </Paper>
