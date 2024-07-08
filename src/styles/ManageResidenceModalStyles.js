@@ -1,24 +1,35 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
+    modal: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
     paper: {
-        position: 'absolute',
-        width: 400,
-        backgroundColor: theme.palette.background.paper,
-        border: '2px solid #000',
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
+        padding: theme.spacing(3),
+        maxWidth: 800,
+        margin: 'auto',
+        textAlign: 'center',
+        boxShadow: theme.shadows[3],
+        backgroundColor: theme.palette.background.default,
     },
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 120,
+    title: {
+        marginBottom: theme.spacing(2),
+        fontWeight: 'bold',
     },
-    selectEmpty: {
+    field: {
+        marginBottom: theme.spacing(2),
+    },
+    actions: {
         marginTop: theme.spacing(2),
+        display: 'flex',
+        justifyContent: 'space-between',
     },
-    button: {
-        marginTop: theme.spacing(2),
-    },
+    label: {
+        fontSize: '1rem',
+        color: '#A3A8A9',
+    }
 }));
 
 export default useStyles;

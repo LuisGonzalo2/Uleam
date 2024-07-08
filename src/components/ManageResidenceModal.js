@@ -81,26 +81,34 @@ const ManageResidenceModal = ({ open, onClose, user, fetchUsers }) => {
             BackdropProps={{
                 timeout: 500,
             }}
+            className={classes.modal}
         >
             <Fade in={open}>
                 <Paper className={classes.paper}>
-                    <Typography variant="h5" gutterBottom>
+                    <Typography variant="h5" gutterBottom className={classes.title}>
                         Administrar Residencia
                     </Typography>
                     <TextField
+                        variant="outlined"
                         label="Número de cuarto"
                         name="dormitory"
                         value={residenceData.dormitory}
                         onChange={handleChange}
                         fullWidth
-                        margin="normal"
+                        className={classes.field}
+                        InputLabelProps={{
+                            classes: {
+                                root: classes.label,
+                            },
+                        }}
                     />
-                    <FormControl fullWidth margin="normal">
-                        <InputLabel>Comportamiento</InputLabel>
+                    <FormControl variant="outlined" fullWidth margin="normal" className={classes.field}>
+                        <InputLabel className={classes.label}>Comportamiento</InputLabel>
                         <Select
                             name="behavior"
                             value={residenceData.behavior}
                             onChange={handleChange}
+                            label="Comportamiento"
                         >
                             <MenuItem value="buena">Buena</MenuItem>
                             <MenuItem value="excelente">Excelente</MenuItem>
@@ -108,13 +116,13 @@ const ManageResidenceModal = ({ open, onClose, user, fetchUsers }) => {
                             <MenuItem value="mala">Mala</MenuItem>
                         </Select>
                     </FormControl>
-                    <FormControl fullWidth margin="normal">
-                        <InputLabel>Compañero</InputLabel>
+                    <FormControl variant="outlined" fullWidth margin="normal" className={classes.field}>
+                        <InputLabel className={classes.label}>Compañero</InputLabel>
                         <Select
                             name="roommate"
                             value={residenceData.roommate}
                             onChange={handleChange}
-                            showSearch
+                            label="Compañero"
                         >
                             {roommateOptions.map(option => (
                                 <MenuItem key={option.cedula} value={option.cedula}>
@@ -124,6 +132,7 @@ const ManageResidenceModal = ({ open, onClose, user, fetchUsers }) => {
                         </Select>
                     </FormControl>
                     <TextField
+                        variant="outlined"
                         label="Nota"
                         name="note"
                         value={residenceData.note}
@@ -132,6 +141,12 @@ const ManageResidenceModal = ({ open, onClose, user, fetchUsers }) => {
                         rows={4}
                         fullWidth
                         margin="normal"
+                        className={classes.field}
+                        InputLabelProps={{
+                            classes: {
+                                root: classes.label,
+                            },
+                        }}
                     />
                     <div className={classes.actions}>
                         <Button variant="contained" color="secondary" onClick={handleExpel}>

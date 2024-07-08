@@ -26,12 +26,12 @@
     "gender": "male",
     "birthday": "2024-06-12",
     "disability": "no",
-    "dormitory": "",
+    "dormitory": "500",
     "status": "approved",
-    "behavior": "regular",
+    "behavior": "buena",
     "companion": null,
-    "note": "",
+    "note": "Es un buen chico xd",
     "residency": true,
-    "roommate": ""
+    "roommate": "1722680400"
   }
 }
