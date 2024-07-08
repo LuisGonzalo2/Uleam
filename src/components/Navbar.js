@@ -15,7 +15,7 @@ const Navbar = () => {
     };
 
     return (
-        <AppBar position="static" style={{ backgroundColor: user?.isAdmin ? 'darkred' : 'blue' }}>
+        <AppBar position="static" style={{ backgroundColor: user?.isAdmin ? 'darkred' : '#19728d' }}>
             <Toolbar>
                 <Box display="flex" alignItems="center" flexGrow={1}>
                     <img src={universityLogo} alt="Universidad Laica Eloy Alfaro de Manabí" style={{ width: 50, marginRight: 10 }} />
