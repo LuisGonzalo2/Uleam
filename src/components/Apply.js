@@ -53,6 +53,19 @@ const Apply = () => {
         fetchStatus();
     }, [user.cedula]);
 
+    const handleOpenCardModal = () => {
+        setIsCardModalOpen(true);
+    };
+
+    const handleCloseCardModal = () => {
+        setIsCardModalOpen(false);
+    };
+
+    const handleCardSubmit = (cardData) => {
+        console.log('Card Data:', cardData);
+        setIsCardEntered(true);
+    };
+
     const handleSubmit = async (values, { setSubmitting }) => {
         setIsLoading(true);
         try {
@@ -82,19 +95,6 @@ const Apply = () => {
             question4: '',
             question5: '',
         });
-    };
-
-    const handleOpenCardModal = () => {
-        setIsCardModalOpen(true);
-    };
-
-    const handleCloseCardModal = () => {
-        setIsCardModalOpen(false);
-    };
-
-    const handleCardSubmit = (cardData) => {
-        console.log('Card Data:', cardData);
-        setIsCardEntered(true);
     };
 
     const handleCloseAlert = () => {
