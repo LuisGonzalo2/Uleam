@@ -43,7 +43,7 @@ const Navbar = () => {
                         Panel
                     </Button>
                 )}
-                {isAuthenticated && user?.status === 'approved' && (
+                {isAuthenticated && user?.status === 'approved'&& location.pathname !== '/residencia' && (
                     <Button color="inherit" component={Link} to="/residencia">
                         Residencia
                     </Button>

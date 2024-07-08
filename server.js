@@ -140,6 +140,17 @@ app.get('/users', (req, res) => {
     res.status(200).json(usersData);
 });
 
+app.get('/users/:cedula', (req, res) => {
+    const { cedula } = req.params;
+    const users = readFile(USERS_FILE);
+
+    if (!users[cedula]) {
+        return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+
+    res.status(200).json(users[cedula]);
+});
+
 app.put('/users/:cedula', (req, res) => {
     const { cedula } = req.params;
     const updatedData = req.body;
