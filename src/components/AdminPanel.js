@@ -26,7 +26,7 @@ const AdminPanel = () => {
         let filteredUsers = [];
         switch (filter) {
             case 'registered':
-                filteredUsers = Object.values(response.data).filter(user => user.status === 'pending');
+                filteredUsers = Object.values(response.data);//todos los usuarios
                 break;
             case 'approved':
                 filteredUsers = Object.values(response.data).filter(user => user.status === 'approved');
