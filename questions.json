@@ -11,15 +11,6 @@
     },
     "status": "approved"
   },
-  "cedula_1": {
-    "name": "Nombre del usuario 1",
-    "cedula": "cedula_1",
-    "questions": {
-      "question1": "respuesta1",
-      "question2": "respuesta2"
-    },
-    "status": "rejected"
-  },
   "3098765432": {
     "name": "Luis Martinez",
     "cedula": "3098765432",
@@ -43,6 +34,15 @@
       "question5": "respuesta5"
     },
     "status": "pending"
+  },
+  "cedula_1": {
+    "name": "Nombre del usuario 1",
+    "cedula": "cedula_1",
+    "questions": {
+      "question1": "respuesta1",
+      "question2": "respuesta2"
+    },
+    "status": "rejected"
   },
   "5098765432": {
     "name": "Sofia Sanchez",
@@ -77,6 +77,30 @@
       "question3": "respuesta3",
       "question4": "respuesta4",
       "question5": "respuesta5"
+    },
+    "status": "pending"
+  },
+  "10098765432": {
+    "name": "Jorge Suarez",
+    "cedula": "10098765432",
+    "questions": {
+      "question1": "asda",
+      "question2": "dsad",
+      "question3": "sadsa",
+      "question4": "dasda",
+      "question5": "dasdada"
+    },
+    "status": "approved"
+  },
+  "9098765432": {
+    "name": "Carmen Ortiz",
+    "cedula": "9098765432",
+    "questions": {
+      "question1": "adad",
+      "question2": "adsad",
+      "question3": "asd",
+      "question4": "asdasd",
+      "question5": "asdsada"
     },
     "status": "pending"
   }

@@ -40,7 +40,7 @@ const Apply = () => {
     useEffect(() => {
         const fetchStatus = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/questions/${user.cedula}`);
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/questions/${user.cedula}`);
                 if (response.data) {
                     setFormData(response.data.questions);
                     setStatus(response.data.status);
@@ -69,7 +69,7 @@ const Apply = () => {
     const handleSubmit = async (values, { setSubmitting }) => {
         setIsLoading(true);
         try {
-            await axios.post(`http://localhost:5000/questions`, {
+            await axios.post(`${process.env.REACT_APP_API_URL}/questions`, {
                 name: user.name,
                 cedula: user.cedula,
                 questions: values,
