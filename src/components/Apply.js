@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Paper, Typography, Grid, Button, Snackbar, TextField as MuiTextField } from '@material-ui/core';
+import { Container, Paper, Typography, Grid, Button, Snackbar } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { TextField } from 'formik-material-ui';
@@ -7,6 +7,7 @@ import MuiAlert from '@material-ui/lab/Alert';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 import useStyles from '../styles/ApplyStyles';
+import CreditCardModal from './CreditCardModal';
 
 const validationSchema = Yup.object({
     question1: Yup.string().required('Campo requerido'),
@@ -33,6 +34,8 @@ const Apply = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [status, setStatus] = useState('');
     const [alert, setAlert] = useState({ open: false, severity: '', message: '' });
+    const [isCardModalOpen, setIsCardModalOpen] = useState(false);
+    const [isCardEntered, setIsCardEntered] = useState(false);
 
     useEffect(() => {
         const fetchStatus = async () => {
@@ -79,6 +82,19 @@ const Apply = () => {
             question4: '',
             question5: '',
         });
+    };
+
+    const handleOpenCardModal = () => {
+        setIsCardModalOpen(true);
+    };
+
+    const handleCloseCardModal = () => {
+        setIsCardModalOpen(false);
+    };
+
+    const handleCardSubmit = (cardData) => {
+        console.log('Card Data:', cardData);
+        setIsCardEntered(true);
     };
 
     const handleCloseAlert = () => {
@@ -171,7 +187,24 @@ const Apply = () => {
                                         />
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <Button type="submit" variant="contained" color="primary" fullWidth disabled={isSubmitting || isLoading}>
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            fullWidth
+                                            onClick={handleOpenCardModal}
+                                            disabled={isCardEntered}
+                                        >
+                                            {isCardEntered ? 'Tarjeta Ingresada' : 'Ingresar Tarjeta'}
+                                        </Button>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <Button
+                                            type="submit"
+                                            variant="contained"
+                                            color="primary"
+                                            fullWidth
+                                            disabled={isSubmitting || isLoading || !isCardEntered}
+                                        >
                                             {isSubmitting || isLoading ? 'Enviando...' : 'Enviar Solicitud'}
                                         </Button>
                                     </Grid>
@@ -186,6 +219,11 @@ const Apply = () => {
                     {alert.message}
                 </Alert>
             </Snackbar>
+            <CreditCardModal
+                open={isCardModalOpen}
+                onClose={handleCloseCardModal}
+                onCardSubmit={handleCardSubmit}
+            />
         </Container>
     );
 };
