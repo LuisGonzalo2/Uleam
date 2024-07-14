@@ -18,7 +18,7 @@ const AdminPanel = () => {
     const [alert, setAlert] = useState({ open: false, severity: '', message: '' });
 
     const fetchUsers = useCallback(async () => {
-        const response = await axios.get('http://localhost:5000/users');
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/users`);
         let filteredUsers = [];
         switch (filter) {
             case 'registered':
@@ -48,7 +48,7 @@ const AdminPanel = () => {
 
     const handleSaveClick = async (cedula) => {
         try {
-            await axios.put(`http://localhost:5000/users/${cedula}`, editedData);
+            await axios.put(`${process.env.REACT_APP_API_URL}/users/${cedula}`, editedData);
             setEditMode(null);
             setAlert({ open: true, severity: 'success', message: 'Datos actualizados correctamente' });
             fetchUsers();
@@ -74,7 +74,7 @@ const AdminPanel = () => {
 
     const handleResidencyToggle = async (cedula, currentResidency) => {
         try {
-            await axios.put(`http://localhost:5000/users/${cedula}`, { residency: !currentResidency });
+            await axios.put(`${process.env.REACT_APP_API_URL}/users/${cedula}`, { residency: !currentResidency });
             setAlert({ open: true, severity: 'success', message: `Residencia ${!currentResidency ? 'asignada' : 'quitada'} correctamente` });
             fetchUsers();
         } catch (error) {

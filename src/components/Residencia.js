@@ -13,7 +13,7 @@ const Residencia = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/users/${user.cedula}`);
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/users/${user.cedula}`);
                 if (response.data) {
                     setResidencyData(response.data);
                     if (response.data.roommate) {
@@ -27,7 +27,7 @@ const Residencia = () => {
 
         const fetchRoommateName = async (roommateCedula) => {
             try {
-                const response = await axios.get(`http://localhost:5000/users/${roommateCedula}`);
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/users/${roommateCedula}`);
                 if (response.data) {
                     setRoommateName(response.data.name);
                 }

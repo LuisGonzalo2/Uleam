@@ -31,7 +31,7 @@ const ManageResidenceModal = ({ open, onClose, user, fetchUsers }) => {
 
     const fetchRoommateOptions = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/users');
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}users`);
             const approvedUsers = Object.values(response.data).filter(u => u.status === 'approved');
             setRoommateOptions(approvedUsers);
         } catch (error) {
@@ -46,7 +46,7 @@ const ManageResidenceModal = ({ open, onClose, user, fetchUsers }) => {
 
     const handleSave = async () => {
         try {
-            await axios.put(`http://localhost:5000/users/${user.cedula}`, residenceData);
+            await axios.put(`${process.env.REACT_APP_API_URL}/users/${user.cedula}`, residenceData);
             setAlert({ open: true, severity: 'success', message: 'Datos de residencia actualizados con éxito' });
             fetchUsers();
             onClose();
@@ -58,7 +58,7 @@ const ManageResidenceModal = ({ open, onClose, user, fetchUsers }) => {
 
     const handleExpel = async () => {
         try {
-            await axios.delete(`http://localhost:5000/users/${user.cedula}`);
+            await axios.delete(`${process.env.REACT_APP_API_URL}/users/${user.cedula}`);
             setAlert({ open: true, severity: 'success', message: 'Usuario expulsado con éxito' });
             fetchUsers();
             onClose();

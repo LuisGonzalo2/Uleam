@@ -1,4 +1,22 @@
 {
+  "1098765432": {
+    "name": "Maria Gomez",
+    "email": "maria.gomez@example.com",
+    "password": "anothersecurepassword",
+    "address": "Calle Verdad 456",
+    "phone": "0987654322",
+    "cedula": "1098765432",
+    "gender": "female",
+    "birthday": "1992-02-02",
+    "disability": "no",
+    "dormitory": "501",
+    "status": "approved",
+    "behavior": "buena",
+    "companion": null,
+    "note": "Muy responsable",
+    "residency": true,
+    "roommate": "1722680400"
+  },
   "1234567890": {
     "name": "Juan Perez",
     "email": "juan.perez@example.com",
@@ -31,24 +49,6 @@
     "behavior": "excelente",
     "companion": null,
     "note": "asdadsada",
-    "residency": true,
-    "roommate": "1722680400"
-  },
-  "1098765432": {
-    "name": "Maria Gomez",
-    "email": "maria.gomez@example.com",
-    "password": "anothersecurepassword",
-    "address": "Calle Verdad 456",
-    "phone": "0987654322",
-    "cedula": "1098765432",
-    "gender": "female",
-    "birthday": "1992-02-02",
-    "disability": "no",
-    "dormitory": "501",
-    "status": "approved",
-    "behavior": "buena",
-    "companion": null,
-    "note": "Muy responsable",
     "residency": true,
     "roommate": "1722680400"
   },
@@ -200,10 +200,10 @@
     "birthday": "2000-11-11",
     "disability": "no",
     "dormitory": null,
-    "status": "pending",
+    "status": "approved",
     "behavior": null,
     "companion": null,
     "note": null,
-    "residency": false
+    "residency": true
   }
 }

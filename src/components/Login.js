@@ -33,7 +33,7 @@ const Login = () => {
     const handleSubmit = async (values, { setSubmitting }) => {
         try {
             console.log('Login request sent:', values);
-            const response = await axios.post('http://localhost:5000/login', values);
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/login`, values);
             alert(response.data.message);
             login(response.data.user); // Asegurarse de pasar la información del usuario
             navigate('/'); // Redirigir a la pantalla de inicio
