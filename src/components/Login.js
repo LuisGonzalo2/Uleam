@@ -44,6 +44,8 @@ const Login = () => {
         }
     };
 
+    const labelColor = "#050505";
+
     return (
         <Container component="main" maxWidth="xs">
             <Paper className={classes.paper}>
@@ -77,6 +79,10 @@ const Login = () => {
                                             ),
                                             className: classes.input,
                                         }}
+                                        InputLabelProps={{
+                                            shrink: true,
+                                            style: { color: labelColor },
+                                        }}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -106,6 +112,10 @@ const Login = () => {
                                                 </InputAdornment>
                                             ),
                                             className: classes.input,
+                                        }}
+                                        InputLabelProps={{
+                                            shrink: true,
+                                            style: { color: labelColor },
                                         }}
                                     />
                                 </Grid>

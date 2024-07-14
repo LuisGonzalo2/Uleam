@@ -100,6 +100,8 @@ const Register = () => {
         }
     };
 
+    const labelColor = "#050505";
+
     return (
         <Container component="main" maxWidth="sm">
             <div className={classes.root}>
@@ -134,7 +136,7 @@ const Register = () => {
                                             component={CustomTextField}
                                             name="name"
                                             label="Nombre"
-                                            InputLabelProps={{ shrink: true }}
+                                            InputLabelProps={{ shrink: true, style: { color: labelColor } }}
                                             startAdornment={<PersonIcon />}
                                         />
                                     </Grid>
@@ -143,7 +145,7 @@ const Register = () => {
                                             component={CustomTextField}
                                             name="email"
                                             label="Correo Electrónico"
-                                            InputLabelProps={{ shrink: true }}
+                                            InputLabelProps={{ shrink: true, style: { color: labelColor } }}
                                             startAdornment={<EmailIcon />}
                                         />
                                     </Grid>
@@ -153,7 +155,7 @@ const Register = () => {
                                             name="password"
                                             label="Contraseña"
                                             type={showPassword ? 'text' : 'password'}
-                                            InputLabelProps={{ shrink: true }}
+                                            InputLabelProps={{ shrink: true, style: { color: labelColor } }}
                                             startAdornment={<LockIcon />}
                                             endAdornment={
                                                 <InputAdornment position="end">
@@ -176,7 +178,7 @@ const Register = () => {
                                             name="confirmPassword"
                                             label="Confirmar Contraseña"
                                             type={showPassword ? 'text' : 'password'}
-                                            InputLabelProps={{ shrink: true }}
+                                            InputLabelProps={{ shrink: true, style: { color: labelColor } }}
                                             startAdornment={<LockIcon />}
                                             endAdornment={
                                                 <InputAdornment position="end">
@@ -196,7 +198,7 @@ const Register = () => {
                                             component={CustomTextField}
                                             name="address"
                                             label="Dirección"
-                                            InputLabelProps={{ shrink: true }}
+                                            InputLabelProps={{ shrink: true, style: { color: labelColor } }}
                                             startAdornment={<HomeIcon />}
                                         />
                                     </Grid>
@@ -205,7 +207,7 @@ const Register = () => {
                                             component={CustomTextField}
                                             name="phone"
                                             label="Número de Teléfono"
-                                            InputLabelProps={{ shrink: true }}
+                                            InputLabelProps={{ shrink: true, style: { color: labelColor } }}
                                             startAdornment={<PhoneIcon />}
                                         />
                                     </Grid>
@@ -214,7 +216,7 @@ const Register = () => {
                                             component={CustomTextField}
                                             name="cedula"
                                             label="Número de Cédula"
-                                            InputLabelProps={{ shrink: true }}
+                                            InputLabelProps={{ shrink: true, style: { color: labelColor } }}
                                             startAdornment={<IdIcon />}
                                         />
                                     </Grid>
@@ -223,7 +225,7 @@ const Register = () => {
                                             component={CustomSelect}
                                             name="gender"
                                             label="Género"
-                                            InputLabelProps={{ shrink: true }}
+                                            InputLabelProps={{ shrink: true, style: { color: labelColor } }}
                                         >
                                             <MenuItem value="male">Masculino</MenuItem>
                                             <MenuItem value="female">Femenino</MenuItem>
@@ -236,7 +238,7 @@ const Register = () => {
                                             name="birthday"
                                             label="Fecha de Cumpleaños"
                                             type="date"
-                                            InputLabelProps={{ shrink: true }}
+                                            InputLabelProps={{ shrink: true, style: { color: labelColor } }}
                                             startAdornment={<CakeIcon />}
                                         />
                                     </Grid>
@@ -245,7 +247,7 @@ const Register = () => {
                                             component={CustomSelect}
                                             name="disability"
                                             label="Discapacidad"
-                                            InputLabelProps={{ shrink: true }}
+                                            InputLabelProps={{ shrink: true, style: { color: labelColor } }}
                                         >
                                             <MenuItem value="yes">Sí</MenuItem>
                                             <MenuItem value="no">No</MenuItem>
